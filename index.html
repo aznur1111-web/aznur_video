@@ -657,11 +657,13 @@
     (() => {
       "use strict";
 
-   
+      // ---------------------------------------------------------------------------
+      // Configuration
+      // ---------------------------------------------------------------------------
 
       const CONFIG = Object.freeze({
         ffmpegScript:
-          "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js",
+          "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.0/dist/ffmpeg.min.js",
         ffmpegCore:
           "https://cdn.jsdelivr.net/npm/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js",
         jsZipScript:
@@ -746,8 +748,9 @@
         session: { count: 0, saved: 0, original: 0 },
       };
 
-      
-
+      // ---------------------------------------------------------------------------
+      // DOM helpers
+      // ---------------------------------------------------------------------------
 
       const $ = (id) => document.getElementById(id);
 
@@ -761,8 +764,9 @@
         return Number.isFinite(value) ? value : fallback;
       }
 
-    
-
+      // ---------------------------------------------------------------------------
+      // General utilities
+      // ---------------------------------------------------------------------------
 
       const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -857,8 +861,9 @@
         return promise;
       }
 
-
-//Folder output
+      // ---------------------------------------------------------------------------
+      // Folder output
+      // ---------------------------------------------------------------------------
 
       async function pickDirectory() {
         if (typeof window.showDirectoryPicker !== "function") {
@@ -931,13 +936,16 @@
         $("clearDir").disabled = !hasDirectory;
       }
 
-  // FFmpeg worker 
-    
+      // ---------------------------------------------------------------------------
+      // FFmpeg worker pool
+      // ---------------------------------------------------------------------------
+
       async function createFFmpeg() {
         await loadScript(CONFIG.ffmpegScript);
 
         const ffmpeg = FFmpeg.createFFmpeg({
           log: false,
+          mainName: "main",
           corePath: CONFIG.ffmpegCore,
         });
 
@@ -1084,14 +1092,10 @@
         }
       }
 
-  
+      // ---------------------------------------------------------------------------
+      // Converter settings and FFmpeg arguments
+      // ---------------------------------------------------------------------------
 
-
-// Converter settings and FFmpeg stuff
-
-
-
-   
       function getSettings() {
         const flip = $("convFlip")?.value || "none";
 
@@ -1317,9 +1321,9 @@
         }
       }
 
-
+      // ---------------------------------------------------------------------------
       // Session statistics
-    
+      // ---------------------------------------------------------------------------
 
       function readStoredStats() {
         try {
@@ -1399,9 +1403,9 @@
         }
       }
 
-     
+      // ---------------------------------------------------------------------------
       // Range value labels and presets
-   
+      // ---------------------------------------------------------------------------
 
       function updateRangeLabels() {
         setText("crfv", $("crf").value);
@@ -1436,9 +1440,9 @@
         updateRangeLabels();
       }
 
-    
+      // ---------------------------------------------------------------------------
       // Converter queue
-      
+      // ---------------------------------------------------------------------------
 
       function renderQueue() {
         const counts = {
@@ -2009,9 +2013,9 @@
         }
       }
 
-      
+      // ---------------------------------------------------------------------------
       // Event wiring
-    
+      // ---------------------------------------------------------------------------
 
       $("workers").max = CPU_COUNT;
 
@@ -2279,9 +2283,10 @@
         );
       };
 
-      
+      // ---------------------------------------------------------------------------
       // Initial state and lifecycle
-   
+      // ---------------------------------------------------------------------------
+
       updateStatsUI();
       updateDirectoryUI();
       updateRangeLabels();
@@ -2295,6 +2300,4 @@
         event.returnValue = "";
       });
     })();
-</script>
-</body>
-</html>
+</script></body></html>
