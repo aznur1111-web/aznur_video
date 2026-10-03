@@ -5,571 +5,100 @@
 <meta name="description" content="Aznur Video Studio — local browser video conversion, compression, trimming and batch processing.">
 <title>Aznur Video Studio</title>
 <style>
-    :root {
-      --bg: #fafafa;
-      --surface: #fff;
-      --border: #e7e5e4;
-      --text: #1c1917;
-      --muted: #57534e;
-      --accent: #f59e0b;
-      --accent-hover: #d97706;
-      --success: #10b981;
-      --error: #ef4444;
-      --info: #3b82f6;
-      --radius: 8px;
-      --radius-lg: 12px;
-      --shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    button,
-    input,
-    select {
-      font: inherit;
-    }
-
-    button {
-      border: 0;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
-
-    header {
-      margin-bottom: 28px;
-      text-align: center;
-    }
-
-    h1 {
-      margin-bottom: 10px;
-      font-size: 2.5rem;
-    }
-
-    .subtitle {
-      max-width: 680px;
-      margin: 0 auto;
-      color: var(--muted);
-    }
-
-    .card {
-      margin-bottom: 20px;
-      padding: 24px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
-    }
-
-    .grid,
-    .g2,
-    .tool-grid {
-      display: grid;
-      gap: 18px;
-    }
-
-    .grid {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-
-    .g2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .tool-grid {
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-    }
-
-    .fg {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    label,
-    .lbl {
-      color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .lr,
-    .row,
-    .sp {
-      display: flex;
-      align-items: center;
-    }
-
-    .lr,
-    .sp {
-      justify-content: space-between;
-    }
-
-    .row {
-      gap: 9px;
-      flex-wrap: wrap;
-    }
-
-    select,
-    input[type="number"],
-    input[type="text"] {
-      width: 100%;
-      padding: 9px 11px;
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-size: 0.92rem;
-    }
-
-    select:focus,
-    input:focus,
-    button:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 1px;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      margin: 7px 0;
-      accent-color: var(--accent);
-    }
-
-    .qv {
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    .btn {
-      padding: 9px 17px;
-      background: var(--text);
-      color: #fff;
-      border-radius: var(--radius);
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background: #333;
-    }
-
-    .btn.secondary {
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    .btn.secondary:hover {
-      background: var(--bg);
-    }
-
-    .btn.accent {
-      background: var(--accent);
-    }
-
-    .btn.accent:hover {
-      background: var(--accent-hover);
-    }
-
-    .btn.danger {
-      background: var(--error);
-    }
-
-    .btn.sm {
-      padding: 6px 11px;
-      font-size: 0.82rem;
-    }
-
-    .btn:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .mode {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 22px;
-    }
-
-    .mode .on {
-      background: var(--accent);
-    }
-
-    .upload-zone {
-      margin-bottom: 20px;
-      padding: 50px 20px;
-      background: var(--surface);
-      border: 2px dashed var(--border);
-      border-radius: var(--radius-lg);
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .upload-zone:hover,
-    .upload-zone.dragover {
-      background: #fffbeb;
-      border-color: var(--accent);
-    }
-
-    .upload-icon {
-      margin-bottom: 10px;
-      font-size: 2.2rem;
-    }
-
-    .upload-zone p,
-    .note {
-      color: var(--muted);
-      font-size: 0.82rem;
-    }
-
-    .upload-zone .btn {
-      margin: 10px 3px 0;
-    }
-
-    .sub {
-      margin: 22px 0 12px;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .stats {
-      display: none;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 18px;
-      padding: 14px 18px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--muted);
-    }
-
-    .stats b {
-      color: var(--text);
-    }
-
-    .file-list {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-
-    .fi {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-      padding: 14px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--border);
-      border-radius: var(--radius);
-    }
-
-    .fi.processing {
-      border-left-color: var(--accent);
-    }
-
-    .fi.completed {
-      border-left-color: var(--success);
-    }
-
-    .fi.failed {
-      border-left-color: var(--error);
-    }
-
-    .info {
-      flex: 1;
-      min-width: 220px;
-    }
-
-    .name {
-      font-weight: 600;
-      word-break: break-all;
-    }
-
-    .meta {
-      display: flex;
-      gap: 9px;
-      flex-wrap: wrap;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
-
-    .badge {
-      padding: 2px 7px;
-      border-radius: 4px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .badge.queued {
-      background: #fef3c7;
-      color: #92400e;
-    }
-
-    .badge.processing {
-      background: #ffedd5;
-      color: #9a3412;
-    }
-
-    .badge.completed {
-      background: #d1fae5;
-      color: #065f46;
-    }
-
-    .badge.failed {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    .good {
-      color: var(--success);
-      font-weight: 600;
-    }
-
-    .bad {
-      color: var(--error);
-      font-weight: 600;
-    }
-
-    .prog {
-      height: 6px;
-      margin-top: 9px;
-      overflow: hidden;
-      background: var(--border);
-      border-radius: 4px;
-    }
-
-    .prog i {
-      display: block;
-      width: 0;
-      height: 100%;
-      background: var(--accent);
-      transition: width 0.15s ease;
-    }
-
-    .stat-card {
-      padding: 18px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      text-align: center;
-    }
-
-    .stat-card .l,
-    .stats-label {
-      color: var(--muted);
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .stat-card .v {
-      font-size: 1.4rem;
-      font-weight: 700;
-    }
-
-    .stats-label {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      font-size: 0.77rem;
-    }
-
-    .folder {
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
-
-    .folder.ok {
-      color: var(--success);
-      font-weight: 600;
-    }
-
-    .preview {
-      overflow: hidden;
-      background: #111;
-      border-radius: var(--radius);
-    }
-
-    .preview video {
-      display: block;
-      width: 100%;
-      max-height: 450px;
-      background: #111;
-      transform-origin: center;
-    }
-
-    .time {
-      padding: 5px 10px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-family: ui-monospace, Menlo, monospace;
-      font-size: 0.82rem;
-      font-weight: 700;
-    }
-
-    .timeline {
-      height: 8px;
-      margin-top: 12px;
-      overflow: hidden;
-      background: var(--border);
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .timeline i {
-      display: block;
-      width: 0;
-      height: 100%;
-      background: var(--accent);
-    }
-
-    .feature-title {
-      margin-bottom: 10px;
-      color: var(--muted);
-      font-size: 0.76rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .tool-box {
-      padding: 12px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-    }
-
-    .tool-box .btn {
-      width: 100%;
-    }
-
-    .hint {
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 0.76rem;
-    }
-
-    .sr {
-      display: flex;
-      justify-content: space-between;
-      padding: 7px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
-    }
-
-    .sr:last-child {
-      border-bottom: 0;
-    }
-
-    .sr span:first-child {
-      color: var(--muted);
-    }
-
-    .cb {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      color: var(--muted);
-      font-size: 0.82rem;
-      text-transform: none;
-      letter-spacing: 0;
-    }
-
-    #toasts {
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      width: min(340px, calc(100vw - 32px));
-    }
-
-    .toast {
-      padding: 10px 14px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--success);
-      border-radius: var(--radius);
-      box-shadow: 0 4px 12px #0002;
-    }
-
-    .toast.err {
-      border-left-color: var(--error);
-    }
-
-    .toast.warn {
-      border-left-color: var(--accent);
-    }
-
-    footer {
-      margin-top: 45px;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.82rem;
-      text-align: center;
-    }
-
-    @media (max-width: 700px) {
-      h1 {
-        font-size: 2rem;
-      }
-
-      .g2 {
-        grid-template-columns: 1fr;
-      }
-
-      .container {
-        padding: 28px 14px;
-      }
-    }
+:root{--bg:#fafafa;--surface:#fff;--border:#e7e5e4;--text:#1c1917;--muted:#57534e;--accent:#f59e0b;--accent-hover:#d97706;--success:#10b981;--error:#ef4444;--info:#3b82f6;--radius:8px;--radius-lg:12px;--shadow:0 1px 2px rgba(0,0,0,.05)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+button,input,select{font:inherit}
+button{border:0}
+.container{max-width:1000px;margin:0 auto;padding:40px 20px}
+header{margin-bottom:28px;text-align:center}
+h1{margin-bottom:10px;font-size:2.5rem}
+.subtitle{max-width:680px;margin:0 auto;color:var(--muted)}
+.card{margin-bottom:20px;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow)}
+.grid,.g2,.tool-grid{display:grid;gap:18px}
+.grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tool-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.fg{display:flex;flex-direction:column;gap:8px}
+label,.lbl{color:var(--muted);font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.lr,.row,.sp{display:flex;align-items:center}
+.lr,.sp{justify-content:space-between}
+.row{gap:9px;flex-wrap:wrap}
+select,input[type="number"],input[type="text"]{width:100%;padding:9px 11px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);font-size:.92rem}
+select:focus,input:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+input[type="range"]{width:100%;margin:7px 0;accent-color:var(--accent)}
+.qv{color:var(--accent);font-weight:700}
+.btn{padding:9px 17px;background:var(--text);color:#fff;border-radius:var(--radius);font-weight:600;cursor:pointer}
+.btn:hover{background:#333}
+.btn.secondary{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.btn.secondary:hover{background:var(--bg)}
+.btn.accent{background:var(--accent)}
+.btn.accent:hover{background:var(--accent-hover)}
+.btn.danger{background:var(--error)}
+.btn.sm{padding:6px 11px;font-size:.82rem}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.hidden{display:none!important}
+.mode{display:flex;justify-content:center;gap:8px;margin-bottom:22px}
+.mode .on{background:var(--accent)}
+.upload-zone{margin-bottom:20px;padding:50px 20px;background:var(--surface);border:2px dashed var(--border);border-radius:var(--radius-lg);text-align:center;cursor:pointer}
+.upload-zone:hover,.upload-zone.dragover{background:#fffbeb;border-color:var(--accent)}
+.upload-icon{margin-bottom:10px;font-size:2.2rem}
+.upload-zone p,.note{color:var(--muted);font-size:.82rem}
+.upload-zone .btn{margin:10px 3px 0}
+.sub{margin:22px 0 12px;padding-top:18px;border-top:1px solid var(--border);color:var(--muted);font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.stats{display:none;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:18px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--muted)}
+.stats b{color:var(--text)}
+.file-list{display:flex;flex-direction:column;gap:9px}
+.fi{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:14px;background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--border);border-radius:var(--radius)}
+.fi.processing{border-left-color:var(--accent)}
+.fi.completed{border-left-color:var(--success)}
+.fi.failed{border-left-color:var(--error)}
+.info{flex:1;min-width:220px}
+.name{font-weight:600;word-break:break-all}
+.meta{display:flex;gap:9px;flex-wrap:wrap;margin-top:4px;color:var(--muted);font-size:.8rem}
+.badge{padding:2px 7px;border-radius:4px;font-size:.68rem;font-weight:700;text-transform:uppercase}
+.badge.queued{background:#fef3c7;color:#92400e}
+.badge.processing{background:#ffedd5;color:#9a3412}
+.badge.completed{background:#d1fae5;color:#065f46}
+.badge.failed{background:#fee2e2;color:#991b1b}
+.good{color:var(--success);font-weight:600}
+.bad{color:var(--error);font-weight:600}
+.prog{height:6px;margin-top:9px;overflow:hidden;background:var(--border);border-radius:4px}
+.prog i{display:block;width:0;height:100%;background:var(--accent);transition:width .15s ease}
+.stat-card{padding:18px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);text-align:center}
+.stat-card .l,.stats-label{color:var(--muted);font-size:.72rem;font-weight:700;text-transform:uppercase}
+.stat-card .v{font-size:1.4rem;font-weight:700}
+.stats-label{display:flex;justify-content:space-between;margin-bottom:10px;font-size:.77rem}
+.folder{color:var(--muted);font-size:.8rem}
+.folder.ok{color:var(--success);font-weight:600}
+.preview{overflow:hidden;background:#111;border-radius:var(--radius)}
+.preview video{display:block;width:100%;max-height:450px;background:#111;transform-origin:center}
+.time{padding:5px 10px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);font-family:ui-monospace,Menlo,monospace;font-size:.82rem;font-weight:700}
+.timeline{height:8px;margin-top:12px;overflow:hidden;background:var(--border);border-radius:8px;cursor:pointer}
+.timeline i{display:block;width:0;height:100%;background:var(--accent)}
+.feature-title{margin-bottom:10px;color:var(--muted);font-size:.76rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.tool-box{padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
+.tool-box .btn{width:100%}
+.hint{margin-top:5px;color:var(--muted);font-size:.76rem}
+.sr{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.sr:last-child{border-bottom:0}
+.sr span:first-child{color:var(--muted)}
+.cb{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:.82rem;text-transform:none;letter-spacing:0}
+#toasts{position:fixed;top:16px;right:16px;z-index:1000;display:flex;flex-direction:column;gap:8px;width:min(340px,calc(100vw - 32px))}
+.toast{padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--success);border-radius:var(--radius);box-shadow:0 4px 12px #0002}
+.toast.err{border-left-color:var(--error)}
+.toast.warn{border-left-color:var(--accent)}
+footer{margin-top:45px;padding-top:18px;border-top:1px solid var(--border);color:var(--muted);font-size:.82rem;text-align:center}
+@media (max-width:700px){h1{font-size:2rem}.g2{grid-template-columns:1fr}.container{padding:28px 14px}}
 </style></head>
 <body><div id="toasts"></div><div class="container">
 <header><h1>Aznur Video Studio</h1><p class="subtitle">Local video conversion, compression, trimming and batch processing directly in your browser. Your files are not uploaded to an Aznur server.</p></header>
 <div class="mode"><button class="btn on" id="mConvert">Converter</button><button class="btn secondary" id="mEdit">Editor</button></div>
 <section id="converter">
 <div class="card"><h3>Video Settings</h3><div class="grid">
-<div class="fg"><label>Preset</label><select id="preset"><option value="custom">Custom</option><option value="small">Small File</option><option value="web1080">Web 1080p</option><option value="web720">Web 720p</option><option value="archive">High Quality</option><option value="av1">AV1 Compression</option></select><p class="note">Quickly applies recommended settings for common use cases.</p></div>
-<div class="fg"><label>Container</label><select id="container"><option value="mp4">MP4</option><option value="webm">WebM</option><option value="mkv">MKV</option><option value="mov">MOV</option><option value="avi">AVI</option><option value="gif">GIF</option></select><p class="note">MP4 plays everywhere. WebM is best for AV1/VP9.</p></div>
-<div class="fg"><label>Video Encoder</label><select id="vc"><option value="libx264">H.264</option><option value="libx265">H.265 / HEVC</option><option value="libsvtav1">AV1 / SVT-AV1</option><option value="libvpx-vp9">VP9</option><option value="libvpx">VP8</option><option value="copy">Copy</option></select><p class="note">H.264 is most compatible. H.265/AV1 compress better.</p></div>
+<div class="fg"><label>Preset</label><select id="preset"><option value="custom">Custom</option><option value="small">Small File</option><option value="web1080">Web 1080p</option><option value="web720">Web 720p</option><option value="archive">High Quality</option><option value="vp9">Small WebM (VP9)</option></select><p class="note">Quickly applies recommended settings for common use cases.</p></div>
+<div class="fg"><label>Container</label><select id="container"><option value="mp4">MP4</option><option value="webm">WebM</option><option value="mkv">MKV</option><option value="mov">MOV</option><option value="avi">AVI</option><option value="gif">GIF</option></select><p class="note">MP4 plays everywhere. WebM is best for VP9.</p></div>
+<div class="fg"><label>Video Encoder</label><select id="vc"><option value="libx264">H.264</option><option value="libx265" disabled>H.265 / HEVC (not available in browser engine)</option><option value="libsvtav1" disabled>AV1 / SVT-AV1 (not available in browser engine)</option><option value="libvpx-vp9">VP9</option><option value="libvpx">VP8</option><option value="copy">Copy</option></select><p class="note">H.264 is most compatible. VP9 compresses better (use WebM).</p></div>
 <div class="fg"><label>Audio Encoder</label><select id="ac"><option value="aac">AAC</option><option value="libopus">Opus</option><option value="libmp3lame">MP3</option><option value="flac">FLAC</option><option value="copy">Copy</option><option value="none">Remove Audio</option></select><p class="note">AAC is standard for MP4. Opus is best for WebM.</p></div>
 <div class="fg"><label>Resolution</label><select id="res"><option value="original">Original</option><option value="2160">2160p</option><option value="1440">1440p</option><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option></select><p class="note">Lowering resolution significantly reduces file size.</p></div>
 <div class="fg"><label>Frame Rate</label><select id="fps"><option value="original">Original</option><option>60</option><option>50</option><option>30</option><option>25</option><option>24</option></select></div></div>
@@ -633,7 +162,7 @@
     <div class="tool-box"><div class="feature-title">Rotate</div><div class="row"><button class="btn sm secondary" id="rotL">↺ 90°</button><button class="btn sm secondary" id="rotR">↻ 90°</button></div></div>
     <div class="tool-box"><div class="feature-title">Flip</div><div class="row"><button class="btn sm secondary" id="flipH">↔ Horizontal</button><button class="btn sm secondary" id="flipV">↕ Vertical</button></div></div>
     <div class="tool-box"><div class="feature-title">Reset</div><button class="btn sm secondary" id="resetTransform">Reset Transform</button><p class="hint" id="transformState">Normal orientation</p></div>
-    <div class="tool-box"><div class="feature-title">Reverse</div><button class="btn sm danger" id="reverse">Export Reversed Video</button><p class="hint">Reverses video and audio.</p></div>
+    <div class="tool-box"><div class="feature-title">Reverse</div><button class="btn sm danger" id="reverse">Export Reversed Video</button><p class="hint">Reverses video (short clips only).</p></div>
   </div>
 
   <h4 class="sub">Crop</h4>
@@ -654,1650 +183,1230 @@
 <footer><p>Aznur Video Studio. Processing is local to your browser; files are not uploaded to an Aznur server.</p><p style="margin-top:4px">Codec availability and performance depend on the browser, device memory and available CPU resources.</p></footer>
 </div>
 <script>
-    (() => {
-      "use strict";
-
-      // ---------------------------------------------------------------------------
-      // Configuration
-      // ---------------------------------------------------------------------------
-
-      const CONFIG = Object.freeze({
-        ffmpegScript:
-          "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.0/dist/ffmpeg.min.js",
-        ffmpegCore:
-          "https://cdn.jsdelivr.net/npm/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js",
-        jsZipScript:
-          "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js",
-        statsKey: "aznur-video-stats-v5",
-        workerKey: "aznur-video-workers-v2",
-        maxWorkers: 8,
-        progressRenderEvery: 5,
-        toastDuration: 4200,
-      });
-
-      const CPU_COUNT = Math.max(
-        1,
-        Math.min(CONFIG.maxWorkers, Number(navigator.hardwareConcurrency) || 1)
-      );
-
-      const PRESETS = Object.freeze({
-        small: {
-          ct: "mp4",
-          vc: "libx264",
-          ac: "aac",
-          res: "720",
-          fps: "30",
-          crf: 28,
-          vb: 2500,
-          ab: 96,
-        },
-        web1080: {
-          ct: "mp4",
-          vc: "libx264",
-          ac: "aac",
-          res: "1080",
-          fps: "30",
-          crf: 23,
-          vb: 5000,
-          ab: 128,
-        },
-        web720: {
-          ct: "mp4",
-          vc: "libx264",
-          ac: "aac",
-          res: "720",
-          fps: "30",
-          crf: 25,
-          vb: 3000,
-          ab: 128,
-        },
-        archive: {
-          ct: "mp4",
-          vc: "libx264",
-          ac: "aac",
-          res: "original",
-          fps: "original",
-          crf: 18,
-          vb: 12000,
-          ab: 192,
-        },
-        av1: {
-          ct: "webm",
-          vc: "libsvtav1",
-          ac: "libopus",
-          res: "original",
-          fps: "original",
-          crf: 30,
-          vb: 3000,
-          ab: 128,
-        },
-      });
-
-      const state = {
-        scripts: new Map(),
-        directory: null,
-        slots: [],
-        slotId: 0,
-        running: false,
-        workers: 1,
-        queue: [],
-        uid: 0,
-        editorFile: null,
-        editorUrl: null,
-        transform: { rot: 0, fh: false, fv: false },
-        session: { count: 0, saved: 0, original: 0 },
-      };
-
-      // ---------------------------------------------------------------------------
-      // DOM helpers
-      // ---------------------------------------------------------------------------
-
-      const $ = (id) => document.getElementById(id);
-
-      function setText(id, value) {
-        const element = $(id);
-        if (element) element.textContent = String(value);
-      }
-
-      function readNumber(id, fallback = 0) {
-        const value = Number($(id)?.value);
-        return Number.isFinite(value) ? value : fallback;
-      }
-
-      // ---------------------------------------------------------------------------
-      // General utilities
-      // ---------------------------------------------------------------------------
-
-      const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-      function formatSize(bytes) {
-        if (!bytes) return "0 B";
-
-        const units = ["B", "KB", "MB", "GB", "TB"];
-        const index = Math.min(
-          units.length - 1,
-          Math.floor(Math.log(Math.abs(bytes)) / Math.log(1024))
-        );
-
-        return `${(bytes / 1024 ** index).toFixed(index ? 1 : 0)} ${units[index]}`;
-      }
-
-      function formatTime(seconds) {
-        const safeSeconds = Math.max(0, Number(seconds) || 0);
-        const minutes = Math.floor(safeSeconds / 60);
-        const secs = Math.floor(safeSeconds % 60);
-
-        return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-      }
-
-      function getExtension(filename) {
-        return (
-          (filename.split(".").pop() || "mp4")
-            .toLowerCase()
-            .replace(/[^a-z0-9]/g, "") || "mp4"
-        );
-      }
-
-      function safeFilename(filename) {
-        return filename
-          .replace(/[^a-z0-9._-]/gi, "_")
-          .replace(/_{2,}/g, "_")
-          .slice(0, 120);
-      }
-
-      function baseName(filename) {
-        return filename.replace(/\.[^.]+$/, "");
-      }
-
-      function getMimeType(container) {
-        return (
-          {
-            mp4: "video/mp4",
-            webm: "video/webm",
-            mov: "video/quicktime",
-            mkv: "video/x-matroska",
-            avi: "video/x-msvideo",
-            gif: "image/gif",
-          }[container] || "application/octet-stream"
-        );
-      }
-
-      function notify(message, type = "ok") {
-        const toast = document.createElement("div");
-        toast.className = `toast ${type}`;
-        toast.textContent = message;
-
-        $("toasts").append(toast);
-        setTimeout(() => toast.remove(), CONFIG.toastDuration);
-      }
-
-      function download(blob, filename) {
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-
-        link.href = url;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-
-        setTimeout(() => URL.revokeObjectURL(url), 5000);
-      }
-
-      function loadScript(url) {
-        if (state.scripts.has(url)) return state.scripts.get(url);
-
-        const promise = new Promise((resolve, reject) => {
-          const script = document.createElement("script");
-
-          script.src = url;
-          script.crossOrigin = "anonymous";
-          script.onload = resolve;
-          script.onerror = () => reject(new Error("Could not load processing engine."));
-          document.head.appendChild(script);
-        });
-
-        state.scripts.set(url, promise);
-        return promise;
-      }
-
-      // ---------------------------------------------------------------------------
-      // Folder output
-      // ---------------------------------------------------------------------------
-
-      async function pickDirectory() {
-        if (typeof window.showDirectoryPicker !== "function") {
-          notify(
-            "Direct folder saving is not supported by this browser. Downloads will be used.",
-            "warn"
-          );
-          return;
-        }
-
-        try {
-          state.directory = await window.showDirectoryPicker({ mode: "readwrite" });
-          updateDirectoryUI();
-        } catch (error) {
-          if (error?.name !== "AbortError") {
-            notify("Could not select the output folder.", "err");
-          }
-        }
-      }
-
-      async function saveOutput(blob, filename) {
-        if (!state.directory) {
-          download(blob, filename);
-          return "download";
-        }
-
-        try {
-          let permission = state.directory.queryPermission
-            ? await state.directory.queryPermission({ mode: "readwrite" })
-            : "granted";
-
-          if (
-            permission !== "granted" &&
-            state.directory.requestPermission
-          ) {
-            permission = await state.directory.requestPermission({
-              mode: "readwrite",
-            });
-          }
-
-          if (permission !== "granted") {
-            throw new Error("Folder permission denied.");
-          }
-
-          const handle = await state.directory.getFileHandle(filename, {
-            create: true,
-          });
-          const writable = await handle.createWritable();
-
-          await writable.write(blob);
-          await writable.close();
-
-          return "folder";
-        } catch {
-          notify("Folder write failed; using Downloads instead.", "warn");
-          download(blob, filename);
-          return "download";
-        }
-      }
-
-      function updateDirectoryUI() {
-        const status = $("dirStatus");
-        const hasDirectory = Boolean(state.directory);
-
-        status.textContent = hasDirectory
-          ? `Selected: ${state.directory.name}`
-          : "No folder selected. Files use Downloads.";
-
-        status.classList.toggle("ok", hasDirectory);
-        $("clearDir").disabled = !hasDirectory;
-      }
-
-      // ---------------------------------------------------------------------------
-      // FFmpeg worker pool
-      // ---------------------------------------------------------------------------
-
-      async function createFFmpeg() {
-        await loadScript(CONFIG.ffmpegScript);
-
-        const ffmpeg = FFmpeg.createFFmpeg({
-          log: false,
-          mainName: "main",
-          corePath: CONFIG.ffmpegCore,
-        });
-
-        await ffmpeg.load();
-        return ffmpeg;
-      }
-
-      async function acquireWorker() {
-        while (true) {
-          const available = state.slots.find((slot) => !slot.busy);
-
-          if (available) {
-            available.busy = true;
-
-            try {
-              if (!available.ffmpeg) {
-                available.ffmpeg = await createFFmpeg();
-              }
-
-              return available;
-            } catch (error) {
-              available.busy = false;
-              throw error;
-            }
-          }
-
-          if (state.slots.length < state.workers) {
-            const slot = {
-              id: ++state.slotId,
-              busy: true,
-              ffmpeg: null,
-            };
-
-            state.slots.push(slot);
-
-            try {
-              slot.ffmpeg = await createFFmpeg();
-              return slot;
-            } catch (error) {
-              slot.busy = false;
-              throw error;
-            }
-          }
-
-          await sleep(40);
-        }
-      }
-
-      async function convert(file, ffmpegArgs, outputExtension, onProgress) {
-        const slot = await acquireWorker();
-        const ffmpeg = slot.ffmpeg;
-        const token = `${Date.now()}_${slot.id}`;
-        const inputName = `input_${token}.${file.extension}`;
-        const outputName = `output_${token}.${outputExtension}`;
-
-        try {
-          ffmpeg.FS("writeFile", inputName, file.data);
-
-          ffmpeg.setLogger(({ type, message }) => {
-            if (!onProgress || type !== "fferr") return;
-
-            const match = message.match(/time=(\d+):(\d+):(\d+\.\d+)/);
-            if (!match) return;
-
-            const seconds =
-              Number(match[1]) * 3600 +
-              Number(match[2]) * 60 +
-              Number(match[3]);
-
-            onProgress(seconds);
-          });
-
-          await ffmpeg.run("-i", inputName, ...ffmpegArgs, "-y", outputName);
-
-          return ffmpeg.FS("readFile", outputName).slice();
-        } finally {
-          try {
-            ffmpeg.FS("unlink", inputName);
-            ffmpeg.FS("unlink", outputName);
-          } catch {
-            // Temporary FFmpeg files may already be gone.
-          }
-
-          slot.busy = false;
-        }
-      }
-
-      async function processVideo(file, options, trim, onProgress, extra = {}) {
-        validateSettings(options);
-
-        const data = new Uint8Array(await file.arrayBuffer());
-        const output = await convert(
-          {
-            data,
-            extension: getExtension(file.name),
-          },
-          buildFfmpegArgs(options, trim, extra),
-          options.ct,
-          onProgress
-        );
-
-        return {
-          blob: new Blob([output], { type: getMimeType(options.ct) }),
-          inputSize: file.size,
-        };
-      }
-
-      async function extractFrame(file, seconds) {
-        const data = new Uint8Array(await file.arrayBuffer());
-        const slot = await acquireWorker();
-        const ffmpeg = slot.ffmpeg;
-        const token = `${Date.now()}_${slot.id}`;
-        const inputName = `frame_input_${token}.${getExtension(file.name)}`;
-        const outputName = `frame_${token}.png`;
-
-        try {
-          ffmpeg.FS("writeFile", inputName, data);
-
-          await ffmpeg.run(
-            "-ss",
-            String(seconds),
-            "-i",
-            inputName,
-            "-frames:v",
-            "1",
-            "-q:v",
-            "2",
-            "-y",
-            outputName
-          );
-
-          return new Blob([ffmpeg.FS("readFile", outputName).slice()], {
-            type: "image/png",
-          });
-        } finally {
-          try {
-            ffmpeg.FS("unlink", inputName);
-            ffmpeg.FS("unlink", outputName);
-          } catch {
-            // Temporary FFmpeg files may already be gone.
-          }
-
-          slot.busy = false;
-        }
-      }
-
-      // ---------------------------------------------------------------------------
-      // Converter settings and FFmpeg arguments
-      // ---------------------------------------------------------------------------
-
-      function getSettings() {
-        const flip = $("convFlip")?.value || "none";
-
-        return {
-          ct: $("container").value,
-          vc: $("vc").value,
-          ac: $("ac").value,
-          res: $("res").value,
-          fps: $("fps").value,
-          crf: readNumber("crf", 23),
-          vb: readNumber("vbit", 5000),
-          ab: readNumber("abit", 128),
-          rate: $("rate").value,
-          br: readNumber("brightness", 0),
-          co: readNumber("contrast", 1),
-          sa: readNumber("saturation", 1),
-          vol: readNumber("volume", 100) / 100,
-          sr: $("sr").value,
-          ch: $("ch").value,
-          rot: readNumber("convRotate", 0),
-          fh: flip === "h" || flip === "hv",
-          fv: flip === "v" || flip === "hv",
-          crop: buildCropSettings(),
-        };
-      }
-
-      function buildCropSettings() {
-        const width = readNumber("convCropW");
-        const height = readNumber("convCropH");
-
-        if (width <= 0 || height <= 0) return null;
-
-        return {
-          x: Math.max(0, readNumber("convCropX")),
-          y: Math.max(0, readNumber("convCropY")),
-          w: width,
-          h: height,
-        };
-      }
-
-      function buildVideoFilter(options) {
-        const filters = [];
-
-        if (options.crop) {
-          filters.push(
-            `crop=${options.crop.w}:${options.crop.h}:${Math.max(
-              0,
-              options.crop.x
-            )}:${Math.max(0, options.crop.y)}`
-          );
-        }
-
-        if (options.res !== "original") {
-          filters.push(
-            `scale=-2:${options.res}:force_original_aspect_ratio=decrease`
-          );
-        }
-
-        if (options.fps !== "original") {
-          filters.push(`fps=${options.fps}`);
-        }
-
-        if (options.rot === 90) filters.push("transpose=1");
-        if (options.rot === 270) filters.push("transpose=2");
-        if (options.rot === 180) filters.push("hflip", "vflip");
-
-        if (options.fh) filters.push("hflip");
-        if (options.fv) filters.push("vflip");
-
-        if (options.br || options.co !== 1 || options.sa !== 1) {
-          filters.push(
-            `eq=brightness=${options.br}:contrast=${options.co}:saturation=${options.sa}`
-          );
-        }
-
-        return filters.join(",");
-      }
-
-      function buildTrimArgs(trim) {
-        if (!trim || trim.s == null || trim.e == null || trim.e <= trim.s) {
-          return [];
-        }
-
-        return ["-ss", String(trim.s), "-t", String(trim.e - trim.s)];
-      }
-
-      function buildFfmpegArgs(options, trim, extra = {}) {
-        const args = [...buildTrimArgs(trim)];
-        const videoFilter = buildVideoFilter(options);
-        const reverse = Boolean(extra.reverse);
-
-        if (options.ct === "gif") {
-          const gifFilter = [
-            videoFilter,
-            "fps=12",
-            "scale=480:-1:flags=lanczos",
-          ]
-            .filter(Boolean)
-            .join(",");
-
-          return [
-            ...args,
-            "-c:v",
-            "gif",
-            "-vf",
-            gifFilter,
-            "-an",
-            "-f",
-            "gif",
-          ];
-        }
-
-        // Video.
-        const canCopyVideo = options.vc === "copy" && !videoFilter && !reverse;
-
-        if (canCopyVideo) {
-          args.push("-c:v", "copy");
+(() => {
+"use strict";
+
+// ---------------------------------------------------------------------------
+// Configuration
+// ---------------------------------------------------------------------------
+
+const CONFIG = Object.freeze({
+  ffmpegScript: "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.0/dist/ffmpeg.min.js",
+  ffmpegCore: "https://cdn.jsdelivr.net/npm/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js",
+  jsZipScript: "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js",
+  statsKey: "aznur-video-stats-v5",
+  workerKey: "aznur-video-workers-v2",
+  maxWorkers: 8,
+  progressRenderEvery: 5,
+  toastDuration: 4200,
+});
+
+// Encoders that are NOT compiled into the ffmpeg.wasm 0.11 core (tested).
+const UNSUPPORTED_ENCODERS = Object.freeze({
+  libx265: "H.265/HEVC is not available in the browser engine. Use H.264 or VP9.",
+  libsvtav1: "AV1 (SVT-AV1) is not available in the browser engine. Use VP9 (WebM) for efficient compression.",
+});
+
+const CPU_COUNT = Math.max(1, Math.min(CONFIG.maxWorkers, Number(navigator.hardwareConcurrency) || 1));
+
+const PRESETS = Object.freeze({
+  small:   { ct: "mp4",  vc: "libx264",    ac: "aac",     res: "720",      fps: "30",       crf: 28, vb: 2500,  ab: 96 },
+  web1080: { ct: "mp4",  vc: "libx264",    ac: "aac",     res: "1080",     fps: "30",       crf: 23, vb: 5000,  ab: 128 },
+  web720:  { ct: "mp4",  vc: "libx264",    ac: "aac",     res: "720",      fps: "30",       crf: 25, vb: 3000,  ab: 128 },
+  archive: { ct: "mp4",  vc: "libx264",    ac: "aac",     res: "original", fps: "original", crf: 18, vb: 12000, ab: 192 },
+  vp9:     { ct: "webm", vc: "libvpx-vp9", ac: "libopus", res: "original", fps: "original", crf: 33, vb: 3000,  ab: 128 },
+});
+
+const state = {
+  scripts: new Map(),
+  directory: null,
+  slots: [],
+  slotId: 0,
+  running: false,
+  workers: 1,
+  queue: [],
+  uid: 0,
+  editorFile: null,
+  editorUrl: null,
+  transform: { rot: 0, fh: false, fv: false },
+  session: { count: 0, saved: 0, original: 0 },
+};
+
+// ---------------------------------------------------------------------------
+// DOM helpers
+// ---------------------------------------------------------------------------
+
+const $ = (id) => document.getElementById(id);
+
+function setText(id, value) {
+  const element = $(id);
+  if (element) element.textContent = String(value);
+}
+
+function readNumber(id, fallback = 0) {
+  const raw = $(id)?.value;
+  if (raw === "" || raw == null) return fallback;
+  const value = Number(raw);
+  return Number.isFinite(value) ? value : fallback;
+}
+
+// ---------------------------------------------------------------------------
+// General utilities
+// ---------------------------------------------------------------------------
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function formatSize(bytes) {
+  if (!bytes) return "0 B";
+  const sign = bytes < 0 ? "-" : "";
+  const abs = Math.abs(bytes);
+  const units = ["B", "KB", "MB", "GB", "TB"];
+  const index = Math.min(units.length - 1, Math.floor(Math.log(abs) / Math.log(1024)));
+  return `${sign}${(abs / 1024 ** index).toFixed(index ? 1 : 0)} ${units[index]}`;
+}
+
+function formatTime(seconds) {
+  const safeSeconds = Math.max(0, Number(seconds) || 0);
+  const minutes = Math.floor(safeSeconds / 60);
+  const secs = Math.floor(safeSeconds % 60);
+  return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+}
+
+function getExtension(filename) {
+  return (filename.split(".").pop() || "mp4").toLowerCase().replace(/[^a-z0-9]/g, "") || "mp4";
+}
+
+function safeFilename(filename) {
+  return filename.replace(/[^a-z0-9._-]/gi, "_").replace(/_{2,}/g, "_").slice(0, 120);
+}
+
+function baseName(filename) {
+  return filename.replace(/\.[^.]+$/, "");
+}
+
+function getMimeType(container) {
+  return ({
+    mp4: "video/mp4", webm: "video/webm", mov: "video/quicktime",
+    mkv: "video/x-matroska", avi: "video/x-msvideo", gif: "image/gif",
+  }[container] || "application/octet-stream");
+}
+
+function notify(message, type = "ok") {
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  $("toasts").append(toast);
+  setTimeout(() => toast.remove(), CONFIG.toastDuration);
+}
+
+function download(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
+function loadScript(url) {
+  if (state.scripts.has(url)) return state.scripts.get(url);
+
+  const promise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = url;
+    script.crossOrigin = "anonymous";
+    script.onload = resolve;
+    script.onerror = () => {
+      state.scripts.delete(url); // allow retry after a network failure
+      reject(new Error("Could not load processing engine. Check your internet connection."));
+    };
+    document.head.appendChild(script);
+  });
+
+  state.scripts.set(url, promise);
+  return promise;
+}
+
+// ---------------------------------------------------------------------------
+// Folder output
+// ---------------------------------------------------------------------------
+
+async function pickDirectory() {
+  if (typeof window.showDirectoryPicker !== "function") {
+    notify("Direct folder saving is not supported by this browser. Downloads will be used.", "warn");
+    return;
+  }
+
+  try {
+    state.directory = await window.showDirectoryPicker({ mode: "readwrite" });
+    updateDirectoryUI();
+  } catch (error) {
+    if (error?.name !== "AbortError") notify("Could not select the output folder.", "err");
+  }
+}
+
+async function saveOutput(blob, filename) {
+  if (!state.directory) {
+    download(blob, filename);
+    return "download";
+  }
+
+  try {
+    let permission = state.directory.queryPermission
+      ? await state.directory.queryPermission({ mode: "readwrite" })
+      : "granted";
+
+    if (permission !== "granted" && state.directory.requestPermission) {
+      permission = await state.directory.requestPermission({ mode: "readwrite" });
+    }
+    if (permission !== "granted") throw new Error("Folder permission denied.");
+
+    const handle = await state.directory.getFileHandle(filename, { create: true });
+    const writable = await handle.createWritable();
+    await writable.write(blob);
+    await writable.close();
+    return "folder";
+  } catch {
+    notify("Folder write failed; using Downloads instead.", "warn");
+    download(blob, filename);
+    return "download";
+  }
+}
+
+function updateDirectoryUI() {
+  const status = $("dirStatus");
+  const hasDirectory = Boolean(state.directory);
+  status.textContent = hasDirectory ? `Selected: ${state.directory.name}` : "No folder selected. Files use Downloads.";
+  status.classList.toggle("ok", hasDirectory);
+  $("clearDir").disabled = !hasDirectory;
+}
+
+// ---------------------------------------------------------------------------
+// FFmpeg worker pool
+// ---------------------------------------------------------------------------
+// ffmpeg.wasm 0.11 can run exactly ONE command per instance (the second run()
+// on the same instance throws "exit(0)" / "can only run one command at a time").
+// So each job gets a fresh instance, and "slots" just limit how many run at once.
+
+async function createFFmpeg() {
+  await loadScript(CONFIG.ffmpegScript);
+
+  const ffmpeg = FFmpeg.createFFmpeg({
+    log: false,
+    mainName: "main",
+    corePath: CONFIG.ffmpegCore,
+  });
+
+  await ffmpeg.load();
+  return ffmpeg;
+}
+
+async function acquireWorker() {
+  while (state.slots.length >= state.workers) await sleep(40);
+
+  // No await between the check above and the push below, so this is race-free.
+  const slot = { id: ++state.slotId, busy: true, ffmpeg: null };
+  state.slots.push(slot);
+
+  try {
+    slot.ffmpeg = await createFFmpeg();
+    return slot;
+  } catch (error) {
+    releaseWorker(slot);
+    throw error;
+  }
+}
+
+function releaseWorker(slot) {
+  const index = state.slots.indexOf(slot);
+  if (index >= 0) state.slots.splice(index, 1);
+  slot.busy = false;
+
+  try {
+    slot.ffmpeg?.exit(); // frees the wasm memory
+  } catch {
+    // exit() throws an ExitStatus by design.
+  }
+  slot.ffmpeg = null;
+}
+
+function describeFailure(logs) {
+  const text = [...logs].reverse().find((line) =>
+    /unknown encoder|unknown decoder|not found|unsupported|invalid|cannot|could not|error|failed|no such|does not|incompatible/i.test(line)
+  );
+  return text ? `FFmpeg: ${text.trim().slice(0, 160)}` : "FFmpeg could not process this file.";
+}
+
+async function runFfmpeg(ffmpeg, args, outputName, logs) {
+  try {
+    await ffmpeg.run(...args);
+  } catch (error) {
+    // A normal finish can surface as ExitStatus 0 - that is not a failure.
+    if (!(error && error.name === "ExitStatus" && error.status === 0)) {
+      throw new Error(describeFailure(logs) || error?.message || "FFmpeg failed.");
+    }
+  }
+
+  let output;
+  try {
+    output = ffmpeg.FS("readFile", outputName).slice();
+  } catch {
+    throw new Error(describeFailure(logs));
+  }
+
+  if (!output || !output.length) throw new Error(describeFailure(logs));
+  return output;
+}
+
+async function convert(file, ffmpegArgs, outputExtension, onProgress) {
+  const slot = await acquireWorker();
+  const ffmpeg = slot.ffmpeg;
+  const token = `${Date.now()}_${slot.id}`;
+  const inputName = `input_${token}.${file.extension}`;
+  const outputName = `output_${token}.${outputExtension}`;
+  const logs = [];
+
+  try {
+    ffmpeg.FS("writeFile", inputName, file.data);
+
+    ffmpeg.setLogger(({ type, message }) => {
+      if (type !== "fferr") return;
+      logs.push(message);
+      if (logs.length > 80) logs.shift();
+      if (!onProgress) return;
+
+      const match = message.match(/time=(\d+):(\d+):(\d+(?:\.\d+)?)/);
+      if (!match) return;
+      onProgress(Number(match[1]) * 3600 + Number(match[2]) * 60 + Number(match[3]));
+    });
+
+    return await runFfmpeg(ffmpeg, ["-i", inputName, ...ffmpegArgs, "-y", outputName], outputName, logs);
+  } finally {
+    releaseWorker(slot);
+  }
+}
+
+async function processVideo(file, options, trim, onProgress, extra = {}) {
+  validateSettings(options);
+
+  const data = new Uint8Array(await file.arrayBuffer());
+  const output = await convert(
+    { data, extension: getExtension(file.name) },
+    buildFfmpegArgs(options, trim, extra),
+    options.ct,
+    onProgress
+  );
+
+  return {
+    blob: new Blob([output], { type: getMimeType(options.ct) }),
+    inputSize: file.size,
+  };
+}
+
+async function extractFrame(file, seconds) {
+  const data = new Uint8Array(await file.arrayBuffer());
+  const slot = await acquireWorker();
+  const ffmpeg = slot.ffmpeg;
+  const token = `${Date.now()}_${slot.id}`;
+  const inputName = `frame_input_${token}.${getExtension(file.name)}`;
+  const outputName = `frame_${token}.png`;
+  const logs = [];
+
+  try {
+    ffmpeg.FS("writeFile", inputName, data);
+    ffmpeg.setLogger(({ type, message }) => {
+      if (type === "fferr") logs.push(message);
+    });
+
+    const output = await runFfmpeg(
+      ffmpeg,
+      ["-ss", String(seconds), "-i", inputName, "-frames:v", "1", "-q:v", "2", "-y", outputName],
+      outputName,
+      logs
+    );
+    return new Blob([output], { type: "image/png" });
+  } finally {
+    releaseWorker(slot);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Converter settings and FFmpeg arguments
+// ---------------------------------------------------------------------------
+
+function getSettings() {
+  const flip = $("convFlip")?.value || "none";
+
+  return {
+    ct: $("container").value,
+    vc: $("vc").value,
+    ac: $("ac").value,
+    res: $("res").value,
+    fps: $("fps").value,
+    crf: readNumber("crf", 23),
+    vb: readNumber("vbit", 5000),
+    ab: readNumber("abit", 128),
+    rate: $("rate").value,
+    br: readNumber("brightness", 0),
+    co: readNumber("contrast", 1),
+    sa: readNumber("saturation", 1),
+    vol: readNumber("volume", 100) / 100,
+    sr: $("sr").value,
+    ch: $("ch").value,
+    rot: readNumber("convRotate", 0),
+    fh: flip === "h" || flip === "hv",
+    fv: flip === "v" || flip === "hv",
+    crop: buildCropSettings(),
+  };
+}
+
+function buildCropSettings() {
+  const width = Math.floor(readNumber("convCropW"));
+  const height = Math.floor(readNumber("convCropH"));
+  if (width <= 0 || height <= 0) return null;
+
+  return {
+    x: Math.max(0, Math.floor(readNumber("convCropX"))),
+    y: Math.max(0, Math.floor(readNumber("convCropY"))),
+    w: width,
+    h: height,
+  };
+}
+
+function buildVideoFilter(options) {
+  const filters = [];
+
+  if (options.crop) {
+    filters.push(`crop=${options.crop.w}:${options.crop.h}:${options.crop.x}:${options.crop.y}`);
+  }
+
+  if (Number(options.res) > 0) {
+    // min(): never upscale a video that is smaller than the target height.
+    filters.push(`scale=-2:'min(${options.res},ih)'`);
+  }
+
+  if (options.fps !== "original") filters.push(`fps=${options.fps}`);
+
+  if (options.rot === 90) filters.push("transpose=1");
+  if (options.rot === 270) filters.push("transpose=2");
+  if (options.rot === 180) filters.push("hflip", "vflip");
+
+  if (options.fh) filters.push("hflip");
+  if (options.fv) filters.push("vflip");
+
+  if (options.br || options.co !== 1 || options.sa !== 1) {
+    filters.push(`eq=brightness=${options.br}:contrast=${options.co}:saturation=${options.sa}`);
+  }
+
+  return filters.join(",");
+}
+
+function buildTrimArgs(trim) {
+  if (!trim || trim.s == null || trim.e == null || trim.e <= trim.s) return [];
+  return ["-ss", String(trim.s), "-t", String(trim.e - trim.s)];
+}
+
+function buildFfmpegArgs(options, trim, extra = {}) {
+  const args = [...buildTrimArgs(trim)];
+  const videoFilter = buildVideoFilter(options);
+  const reverse = Boolean(extra.reverse);
+
+  if (options.ct === "gif") {
+    const gifFilter = [videoFilter, "fps=12", "scale=480:-1:flags=lanczos"].filter(Boolean).join(",");
+    return [...args, "-c:v", "gif", "-vf", gifFilter, "-an", "-f", "gif"];
+  }
+
+  // ---- Video ---------------------------------------------------------------
+  // "Copy" cannot be combined with filters; fall back to a real encoder then.
+  let videoCodec = options.vc;
+  if (videoCodec === "copy" && (videoFilter || reverse)) {
+    videoCodec = options.ct === "webm" ? "libvpx-vp9" : "libx264";
+  }
+
+  if (videoCodec === "copy") {
+    args.push("-c:v", "copy");
+  } else {
+    args.push("-c:v", videoCodec);
+
+    if (options.rate === "bitrate") {
+      args.push("-b:v", `${options.vb}k`);
+    } else if (videoCodec === "libvpx-vp9") {
+      args.push("-crf", String(options.crf), "-b:v", "0"); // "-b:v 0" = true constant quality
+    } else if (videoCodec === "libvpx") {
+      args.push("-crf", String(options.crf), "-b:v", "4M"); // VP8 needs a bitrate ceiling with CRF
+    } else if (videoCodec === "libx264") {
+      args.push("-crf", String(options.crf));
+    }
+
+    if (videoCodec === "libx264") args.push("-preset", "medium");
+    if (videoCodec === "libvpx-vp9") args.push("-deadline", "good", "-cpu-used", "4");
+
+    args.push("-pix_fmt", "yuv420p");
+
+    const finalVideoFilter = [videoFilter, reverse ? "reverse" : ""].filter(Boolean).join(",");
+    if (finalVideoFilter) args.push("-vf", finalVideoFilter);
+  }
+
+  // ---- Audio ---------------------------------------------------------------
+  const audioFilters = [];
+  if (options.vol !== 1) audioFilters.push(`volume=${options.vol}`);
+  if (reverse && extra.reverseAudio) audioFilters.push("areverse");
+
+  let audioCodec = options.ac;
+  if (audioCodec === "copy" && audioFilters.length) {
+    audioCodec = options.ct === "webm" ? "libopus" : "aac";
+  }
+
+  if (audioCodec === "none" || extra.mute) {
+    args.push("-an");
+  } else if (audioCodec === "copy") {
+    args.push("-c:a", "copy");
+  } else {
+    args.push("-c:a", audioCodec);
+
+    if (audioCodec !== "flac") args.push("-b:a", `${options.ab}k`);
+    if (options.sr !== "original") args.push("-ar", options.sr);
+    if (options.ch !== "original") args.push("-ac", options.ch);
+    if (audioFilters.length) args.push("-filter:a", audioFilters.join(","));
+  }
+
+  // ---- Container -----------------------------------------------------------
+  if (options.ct === "mp4") args.push("-movflags", "+faststart");
+  if (options.ct === "webm") args.push("-f", "webm");
+
+  return args;
+}
+
+function validateSettings(options) {
+  if (UNSUPPORTED_ENCODERS[options.vc]) {
+    throw new Error(UNSUPPORTED_ENCODERS[options.vc]);
+  }
+
+  if (options.ct !== "gif" && options.ct === "webm" &&
+      !["libvpx-vp9", "libvpx", "copy"].includes(options.vc)) {
+    throw new Error("WebM requires VP8, VP9 or Copy video.");
+  }
+
+  if (options.ct === "webm" && !["libopus", "copy", "none"].includes(options.ac)) {
+    throw new Error("WebM requires Opus, Copy or no audio.");
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Session statistics
+// ---------------------------------------------------------------------------
+
+function readStoredStats() {
+  try {
+    return JSON.parse(localStorage.getItem(CONFIG.statsKey)) || { n: 0, s: 0, o: 0 };
+  } catch {
+    return { n: 0, s: 0, o: 0 };
+  }
+}
+
+function writeStoredStats(stats) {
+  try {
+    localStorage.setItem(CONFIG.statsKey, JSON.stringify(stats));
+  } catch {
+    // localStorage can be unavailable or full.
+  }
+}
+
+function updateStatsUI() {
+  const stored = readStoredStats();
+  const reduction = state.session.original > 0
+    ? Math.max(0, (state.session.saved / state.session.original) * 100)
+    : 0;
+
+  setText("sn", state.session.count);
+  setText("ss", formatSize(Math.max(0, state.session.saved)));
+  setText("sp", `${reduction.toFixed(1)}%`);
+  setText("an", stored.n || "-");
+  setText("as", stored.n ? formatSize(Math.max(0, stored.s)) : "-");
+}
+
+function addStat(originalBytes, outputBytes, count = 1) {
+  const saved = originalBytes - outputBytes;
+
+  state.session.count += count;
+  state.session.saved += saved;
+  state.session.original += originalBytes;
+
+  const stored = readStoredStats();
+  stored.n += count;
+  stored.s += saved;
+  stored.o += originalBytes;
+  writeStoredStats(stored);
+
+  updateStatsUI();
+}
+
+// ---------------------------------------------------------------------------
+// Worker controls
+// ---------------------------------------------------------------------------
+
+function updateWorkerUI() {
+  state.workers = Number($("workers").value);
+  setText("wv", `${state.workers} / ${CPU_COUNT}`);
+  setText("wh", state.workers === CPU_COUNT
+    ? "Using all available logical CPU threads for independent batch jobs."
+    : `Using ${state.workers} of ${CPU_COUNT} logical CPU threads for independent batch jobs.`);
+
+  try {
+    localStorage.setItem(CONFIG.workerKey, String(state.workers));
+  } catch {
+    // Ignore unavailable localStorage.
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Range value labels and presets
+// ---------------------------------------------------------------------------
+
+function updateRangeLabels() {
+  setText("crfv", $("crf").value);
+  setText("vbv", `${(Number($("vbit").value) / 1000).toFixed(1)} Mbps`);
+  setText("abv", `${$("abit").value} kbps`);
+  setText("brv", Number($("brightness").value).toFixed(2));
+  setText("cov", Number($("contrast").value).toFixed(2));
+  setText("sav", Number($("saturation").value).toFixed(2));
+  setText("volv", `${$("volume").value}%`);
+}
+
+function applyPreset() {
+  const preset = PRESETS[$("preset").value];
+  if (!preset) return;
+
+  const settingIds = { ct: "container", vc: "vc", ac: "ac", res: "res", fps: "fps", crf: "crf", vb: "vbit", ab: "abit" };
+
+  Object.entries(preset).forEach(([key, value]) => {
+    const id = settingIds[key];
+    if (id) $(id).value = value;
+  });
+
+  $("rate").value = "crf";
+  updateRangeLabels();
+}
+
+// Keep container / encoder choices compatible when the user changes either one.
+function syncContainerDefaults() {
+  const ct = $("container").value;
+  if (ct === "webm") {
+    if (!["libvpx-vp9", "libvpx", "copy"].includes($("vc").value)) $("vc").value = "libvpx-vp9";
+    if (!["libopus", "copy", "none"].includes($("ac").value)) $("ac").value = "libopus";
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Converter queue
+// ---------------------------------------------------------------------------
+
+function renderQueue() {
+  const count = (status) => state.queue.filter((item) => item.status === status).length;
+
+  setText("ap", count("processing"));
+  setText("aq", count("queued"));
+  setText("acount", count("completed"));
+  setText("af", count("failed"));
+
+  $("stats").style.display = state.queue.length ? "flex" : "none";
+  $("listCard").classList.toggle("hidden", !state.queue.length);
+
+  const list = $("list");
+  list.replaceChildren();
+
+  state.queue.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = `fi ${item.status}`;
+
+    const info = document.createElement("div");
+    info.className = "info";
+
+    const name = document.createElement("div");
+    name.className = "name";
+    name.textContent = item.file.name;
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+
+    const badge = document.createElement("span");
+    badge.className = `badge ${item.status}`;
+    badge.textContent = item.status;
+    meta.append(badge);
+
+    const originalSize = document.createElement("span");
+    originalSize.textContent = formatSize(item.file.size);
+    meta.append(originalSize);
+
+    if (item.output) {
+      const outputSize = document.createElement("span");
+      outputSize.textContent = `→ ${formatSize(item.output.size)}`;
+      meta.append(outputSize);
+
+      const delta = document.createElement("span");
+      const percentage = Math.abs(100 - (item.output.size / item.file.size) * 100);
+      delta.className = item.output.size <= item.file.size ? "good" : "bad";
+      delta.textContent = `${percentage.toFixed(1)}% ${item.output.size <= item.file.size ? "smaller" : "larger"}`;
+      meta.append(delta);
+    }
+
+    if (item.error) {
+      const error = document.createElement("span");
+      error.className = "bad";
+      error.textContent = item.error;
+      meta.append(error);
+    }
+
+    info.append(name, meta);
+
+    if (item.status === "processing") {
+      const progress = document.createElement("div");
+      progress.className = "prog";
+      const fill = document.createElement("i");
+      fill.style.width = `${item.progress || 3}%`;
+      progress.append(fill);
+      info.append(progress);
+    }
+
+    row.append(info);
+
+    if (item.output) {
+      const actions = document.createElement("div");
+      actions.className = "row";
+      const downloadButton = document.createElement("button");
+      downloadButton.className = "btn secondary sm";
+      downloadButton.textContent = "Download";
+      downloadButton.onclick = () => download(item.output.blob, item.output.name);
+      actions.append(downloadButton);
+      row.append(actions);
+    }
+
+    list.append(row);
+  });
+}
+
+function getUniqueOutputName(base, suffix, extension) {
+  const normalizedSuffix = suffix || "_converted";
+  let name = `${base}${normalizedSuffix}.${extension}`;
+  let index = 1;
+
+  while (state.queue.some((item) => item.output && item.output.name === name)) {
+    name = `${base}${normalizedSuffix}_${index}.${extension}`;
+    index += 1;
+  }
+  return name;
+}
+
+async function processQueueItem(item) {
+  item.status = "processing";
+  item.progress = 3;
+  item.error = "";
+  renderQueue();
+
+  try {
+    const result = await processVideo(item.file, item.options, null, () => {
+      item.progress = Math.min(98, (item.progress || 0) + 1);
+      if (item.progress % CONFIG.progressRenderEvery === 0) renderQueue();
+    });
+
+    const base = safeFilename(baseName(item.file.name));
+    const outputName = getUniqueOutputName(base, $("suffix").value, item.options.ct);
+    const where = await saveOutput(result.blob, outputName);
+
+    item.output = { blob: result.blob, size: result.blob.size, name: outputName, where };
+    item.status = "completed";
+    item.progress = 100;
+
+    addStat(item.file.size, result.blob.size);
+  } catch (error) {
+    item.status = "failed";
+    item.error = error?.message || String(error);
+  }
+
+  renderQueue();
+}
+
+async function runQueue() {
+  if (state.running) return;
+  state.running = true;
+
+  const worker = async () => {
+    while (true) {
+      const item = state.queue.find((candidate) => candidate.status === "queued");
+      if (!item) return;
+      await processQueueItem(item);
+    }
+  };
+
+  try {
+    await Promise.all(Array.from({ length: state.workers }, () => worker()));
+  } finally {
+    state.running = false;
+    if (state.queue.some((item) => item.status === "queued")) void runQueue();
+  }
+}
+
+function addFiles(fileList) {
+  const supported = [...fileList].filter((file) =>
+    file.type.startsWith("video/") || /\.(mp4|webm|mov|mkv|avi|m4v|ts|m2ts|mpeg|mpg|gif)$/i.test(file.name)
+  );
+
+  if (!supported.length) {
+    notify("No supported video files found.", "warn");
+    return;
+  }
+
+  const options = getSettings();
+
+  try {
+    validateSettings(options);
+  } catch (error) {
+    notify(error.message, "err");
+    return;
+  }
+
+  supported.forEach((file) => {
+    state.queue.push({ id: ++state.uid, file, options, status: "queued", progress: 0, output: null, error: "" });
+  });
+
+  renderQueue();
+  void runQueue();
+}
+
+// ---------------------------------------------------------------------------
+// Editor
+// ---------------------------------------------------------------------------
+
+function setMode(editorMode) {
+  $("converter").classList.toggle("hidden", editorMode);
+  $("editor").classList.toggle("hidden", !editorMode);
+  $("mConvert").className = `btn ${editorMode ? "secondary" : "on"}`;
+  $("mEdit").className = `btn ${editorMode ? "on" : "secondary"}`;
+}
+
+function updateTransformLabel() {
+  const rotation = state.transform.rot === 0 ? "0°" : `${state.transform.rot}°`;
+  const flips = `${state.transform.fh ? "H" : ""}${state.transform.fv ? "V" : ""}`;
+  setText("transformState", `Rotate ${rotation}${flips ? ` · Flip ${flips}` : " · Normal flip"}`);
+}
+
+function previewTransform() {
+  const { rot, fh, fv } = state.transform;
+  const scaleX = fh ? -1 : 1;
+  const scaleY = fv ? -1 : 1;
+  $("video").style.transform = `rotate(${rot}deg) scale(${scaleX}, ${scaleY})`;
+  updateTransformLabel();
+}
+
+function resetTransform() {
+  state.transform = { rot: 0, fh: false, fv: false };
+  previewTransform();
+}
+
+function durationOrZero(video) {
+  return Number.isFinite(video.duration) ? video.duration : 0;
+}
+
+function updateEditorTime() {
+  const video = $("video");
+  const duration = durationOrZero(video);
+  const progress = duration ? (video.currentTime / duration) * 100 : 0;
+
+  setText("time", `${formatTime(video.currentTime)} / ${formatTime(duration)}`);
+  $("fill").style.width = `${Math.min(100, Math.max(0, progress))}%`;
+}
+
+function resetEditorControls() {
+  const video = $("video");
+  const width = video.videoWidth || 0;
+  const height = video.videoHeight || 0;
+
+  $("ts").value = "0";
+  $("te").value = durationOrZero(video).toFixed(2);
+  $("cropX").value = "0";
+  $("cropY").value = "0";
+  $("cropW").value = width;
+  $("cropH").value = height;
+  $("muteAudio").checked = false;
+  $("reverseAudio").checked = false;
+
+  setText("cropHint", width && height ? `Source: ${width} × ${height}` : "");
+  resetTransform();
+  updateEditorTime();
+}
+
+function openEditorFile(file) {
+  state.editorFile = file;
+
+  $("edDrop").classList.add("hidden");
+  $("edCard").classList.remove("hidden");
+  setText("edName", file.name);
+
+  if (state.editorUrl) URL.revokeObjectURL(state.editorUrl);
+  state.editorUrl = URL.createObjectURL(file);
+
+  const video = $("video");
+  video.style.transform = "none";
+
+  video.onloadedmetadata = () => {
+    resetEditorControls();
+    setText("edInfo", `${video.videoWidth} × ${video.videoHeight} · ${formatSize(file.size)} · ${formatTime(video.duration)}`);
+  };
+
+  video.onerror = () => {
+    setText("edInfo", "This browser cannot preview this file, but exporting may still work.");
+  };
+
+  video.src = state.editorUrl;
+}
+
+function closeEditorFile() {
+  $("video").pause();
+  if (state.editorUrl) URL.revokeObjectURL(state.editorUrl);
+
+  state.editorUrl = null;
+  state.editorFile = null;
+
+  $("video").removeAttribute("src");
+  $("edCard").classList.add("hidden");
+  $("edDrop").classList.remove("hidden");
+  resetTransform();
+}
+
+function clampEditorCrop() {
+  const video = $("video");
+  const maxWidth = video.videoWidth || 0;
+  const maxHeight = video.videoHeight || 0;
+
+  let x = Math.max(0, Math.floor(readNumber("cropX")));
+  let y = Math.max(0, Math.floor(readNumber("cropY")));
+  let width = Math.max(1, Math.floor(readNumber("cropW", maxWidth)));
+  let height = Math.max(1, Math.floor(readNumber("cropH", maxHeight)));
+
+  if (x > maxWidth) x = maxWidth;
+  if (y > maxHeight) y = maxHeight;
+  if (x + width > maxWidth) width = Math.max(1, maxWidth - x);
+  if (y + height > maxHeight) height = Math.max(1, maxHeight - y);
+
+  $("cropX").value = x;
+  $("cropY").value = y;
+  $("cropW").value = width;
+  $("cropH").value = height;
+}
+
+function getEditorSettings() {
+  const options = getSettings();
+  const video = $("video");
+
+  options.rot = state.transform.rot;
+  options.fh = state.transform.fh;
+  options.fv = state.transform.fv;
+
+  const width = Math.floor(readNumber("cropW"));
+  const height = Math.floor(readNumber("cropH"));
+  const x = Math.floor(readNumber("cropX"));
+  const y = Math.floor(readNumber("cropY"));
+  const originalWidth = video.videoWidth || 0;
+  const originalHeight = video.videoHeight || 0;
+
+  options.crop = width > 0 && height > 0 &&
+    (width < originalWidth || height < originalHeight || x > 0 || y > 0)
+    ? { x, y, w: width, h: height }
+    : null;
+
+  return options;
+}
+
+async function editorExport(label, trim = null, extra = {}, suffix = "_edited") {
+  if (!state.editorFile) return;
+
+  const options = getEditorSettings();
+  const progressBar = $("eprog");
+  const progressFill = $("ep");
+
+  progressBar.classList.remove("hidden");
+  progressFill.style.width = "3%";
+
+  try {
+    const result = await processVideo(
+      state.editorFile,
+      options,
+      trim,
+      (seconds) => {
+        if (trim && trim.e > trim.s) {
+          const percent = 5 + (seconds / (trim.e - trim.s)) * 90;
+          progressFill.style.width = `${Math.min(96, percent)}%`;
         } else {
-          args.push("-c:v", options.vc);
-
-          if (options.rate === "bitrate") {
-            args.push("-b:v", `${options.vb}k`);
-          } else if (
-            ["libx264", "libx265", "libsvtav1", "libvpx-vp9"].includes(
-              options.vc
-            )
-          ) {
-            args.push("-crf", String(options.crf));
-          }
-
-          if (options.vc === "libx264" || options.vc === "libx265") {
-            args.push("-preset", "medium");
-          }
-
-          if (options.vc === "libsvtav1") {
-            args.push("-preset", "8");
-          }
-
-          if (options.vc === "libvpx-vp9") {
-            args.push("-deadline", "good", "-cpu-used", "4");
-          }
-
-          args.push("-pix_fmt", "yuv420p");
-
-          const finalVideoFilter = [
-            videoFilter,
-            reverse ? "reverse" : "",
-          ]
-            .filter(Boolean)
-            .join(",");
-
-          if (finalVideoFilter) {
-            args.push("-vf", finalVideoFilter);
-          }
+          const duration = durationOrZero($("video"));
+          const percent = duration ? 5 + (seconds / duration) * 90 : (parseFloat(progressFill.style.width) || 3) + 1;
+          progressFill.style.width = `${Math.min(96, percent)}%`;
         }
-
-        // Audio.
-        const canCopyAudio =
-          options.ac === "copy" &&
-          !videoFilter &&
-          !reverse &&
-          options.vol === 1;
-
-        if (options.ac === "none" || extra.mute) {
-          args.push("-an");
-        } else if (canCopyAudio) {
-          args.push("-c:a", "copy");
-        } else {
-          args.push("-c:a", options.ac);
-
-          if (options.ac !== "flac") {
-            args.push("-b:a", `${options.ab}k`);
-          }
-
-          if (options.sr !== "original") {
-            args.push("-ar", options.sr);
-          }
-
-          if (options.ch !== "original") {
-            args.push("-ac", options.ch);
-          }
-
-          const audioFilters = [];
-
-          if (options.vol !== 1) {
-            audioFilters.push(`volume=${options.vol}`);
-          }
-
-          if (reverse && extra.reverseAudio) {
-            audioFilters.push("areverse");
-          }
-
-          if (audioFilters.length) {
-            args.push("-filter:a", audioFilters.join(","));
-          }
-        }
-
-        // Container-specific flags.
-        if (options.ct === "mp4") {
-          args.push("-movflags", "+faststart");
-        }
-
-        if (options.ct === "webm") {
-          args.push("-f", "webm");
-        }
-
-        return args;
-      }
-
-      function validateSettings(options) {
-        if (
-          options.ct === "webm" &&
-          !["libvpx-vp9", "libvpx", "libsvtav1", "copy"].includes(options.vc)
-        ) {
-          throw new Error("WebM requires VP8, VP9, AV1 or Copy video.");
-        }
-
-        if (
-          options.ct === "webm" &&
-          !["libopus", "copy", "none"].includes(options.ac)
-        ) {
-          throw new Error("WebM requires Opus, Copy or no audio.");
-        }
-      }
-
-      // ---------------------------------------------------------------------------
-      // Session statistics
-      // ---------------------------------------------------------------------------
-
-      function readStoredStats() {
-        try {
-          return (
-            JSON.parse(localStorage.getItem(CONFIG.statsKey)) || {
-              n: 0,
-              s: 0,
-              o: 0,
-            }
-          );
-        } catch {
-          return { n: 0, s: 0, o: 0 };
-        }
-      }
-
-      function writeStoredStats(stats) {
-        try {
-          localStorage.setItem(CONFIG.statsKey, JSON.stringify(stats));
-        } catch {
-          // localStorage can be unavailable or full.
-        }
-      }
-
-      function updateStatsUI() {
-        const stored = readStoredStats();
-        const reduction =
-          state.session.original > 0
-            ? Math.max(
-                0,
-                (state.session.saved / state.session.original) * 100
-              )
-            : 0;
-
-        setText("sn", state.session.count);
-        setText("ss", formatSize(Math.max(0, state.session.saved)));
-        setText("sp", `${reduction.toFixed(1)}%`);
-        setText("an", stored.n || "-");
-        setText("as", stored.n ? formatSize(Math.max(0, stored.s)) : "-");
-      }
-
-      function addStat(originalBytes, outputBytes, count = 1) {
-        const saved = originalBytes - outputBytes;
-
-        state.session.count += count;
-        state.session.saved += saved;
-        state.session.original += originalBytes;
-
-        const stored = readStoredStats();
-        stored.n += count;
-        stored.s += saved;
-        stored.o += originalBytes;
-        writeStoredStats(stored);
-
-        updateStatsUI();
-      }
-
-      // ---------------------------------------------------------------------------
-      // Worker controls
-      // ---------------------------------------------------------------------------
-
-      function updateWorkerUI() {
-        state.workers = Number($("workers").value);
-
-        setText("wv", `${state.workers} / ${CPU_COUNT}`);
-
-        setText(
-          "wh",
-          state.workers === CPU_COUNT
-            ? "Using all available logical CPU threads for independent batch jobs."
-            : `Using ${state.workers} of ${CPU_COUNT} logical CPU threads for independent batch jobs.`
-        );
-
-        try {
-          localStorage.setItem(CONFIG.workerKey, String(state.workers));
-        } catch {
-          // Ignore unavailable localStorage.
-        }
-      }
-
-      // ---------------------------------------------------------------------------
-      // Range value labels and presets
-      // ---------------------------------------------------------------------------
-
-      function updateRangeLabels() {
-        setText("crfv", $("crf").value);
-        setText("vbv", `${(Number($("vbit").value) / 1000).toFixed(1)} Mbps`);
-        setText("abv", `${$("abit").value} kbps`);
-        setText("brv", Number($("brightness").value).toFixed(2));
-        setText("cov", Number($("contrast").value).toFixed(2));
-        setText("sav", Number($("saturation").value).toFixed(2));
-        setText("volv", `${$("volume").value}%`);
-      }
-
-      function applyPreset() {
-        const preset = PRESETS[$("preset").value];
-        if (!preset) return;
-
-        const settingIds = {
-          ct: "container",
-          vc: "vc",
-          ac: "ac",
-          res: "res",
-          fps: "fps",
-          crf: "crf",
-          vb: "vbit",
-          ab: "abit",
-        };
-
-        Object.entries(preset).forEach(([key, value]) => {
-          const id = settingIds[key];
-          if (id) $(id).value = value;
-        });
-
-        updateRangeLabels();
-      }
-
-      // ---------------------------------------------------------------------------
-      // Converter queue
-      // ---------------------------------------------------------------------------
-
-      function renderQueue() {
-        const counts = {
-          processing: state.queue.filter((item) => item.status === "processing")
-            .length,
-          queued: state.queue.filter((item) => item.status === "queued").length,
-          completed: state.queue.filter((item) => item.status === "completed")
-            .length,
-          failed: state.queue.filter((item) => item.status === "failed").length,
-        };
-
-        setText("ap", counts.processing);
-        setText("aq", counts.queued);
-        setText("acount", counts.completed);
-        setText("af", counts.failed);
-
-        $("stats").style.display = state.queue.length ? "flex" : "none";
-        $("listCard").classList.toggle("hidden", !state.queue.length);
-
-        const list = $("list");
-        list.replaceChildren();
-
-        state.queue.forEach((item) => {
-          const row = document.createElement("div");
-          row.className = `fi ${item.status}`;
-
-          const info = document.createElement("div");
-          info.className = "info";
-
-          const name = document.createElement("div");
-          name.className = "name";
-          name.textContent = item.file.name;
-
-          const meta = document.createElement("div");
-          meta.className = "meta";
-
-          const badge = document.createElement("span");
-          badge.className = `badge ${item.status}`;
-          badge.textContent = item.status;
-          meta.append(badge);
-
-          const originalSize = document.createElement("span");
-          originalSize.textContent = formatSize(item.file.size);
-          meta.append(originalSize);
-
-          if (item.output) {
-            const outputSize = document.createElement("span");
-            outputSize.textContent = `→ ${formatSize(item.output.size)}`;
-            meta.append(outputSize);
-
-            const delta = document.createElement("span");
-            const percentage = Math.abs(
-              100 - (item.output.size / item.file.size) * 100
-            );
-
-            delta.className =
-              item.output.size <= item.file.size ? "good" : "bad";
-            delta.textContent = `${percentage.toFixed(1)}% ${
-              item.output.size <= item.file.size ? "smaller" : "larger"
-            }`;
-
-            meta.append(delta);
-          }
-
-          if (item.error) {
-            const error = document.createElement("span");
-            error.className = "bad";
-            error.textContent = item.error;
-            meta.append(error);
-          }
-
-          info.append(name, meta);
-
-          if (item.status === "processing") {
-            const progress = document.createElement("div");
-            progress.className = "prog";
-
-            const fill = document.createElement("i");
-            fill.style.width = `${item.progress || 3}%`;
-
-            progress.append(fill);
-            info.append(progress);
-          }
-
-          row.append(info);
-
-          if (item.output) {
-            const actions = document.createElement("div");
-            actions.className = "row";
-
-            const downloadButton = document.createElement("button");
-            downloadButton.className = "btn secondary sm";
-            downloadButton.textContent = "Download";
-            downloadButton.onclick = () =>
-              download(item.output.blob, item.output.name);
-
-            actions.append(downloadButton);
-            row.append(actions);
-          }
-
-          list.append(row);
-        });
-      }
-
-      function getUniqueOutputName(base, suffix, extension) {
-        const normalizedSuffix = suffix || "_converted";
-        let name = `${base}${normalizedSuffix}.${extension}`;
-        let index = 1;
-
-        while (
-          state.queue.some(
-            (item) => item.output && item.output.name === name
-          )
-        ) {
-          name = `${base}${normalizedSuffix}_${index}.${extension}`;
-          index += 1;
-        }
-
-        return name;
-      }
-
-      async function processQueueItem(item) {
-        item.status = "processing";
-        item.progress = 3;
-        renderQueue();
-
-        try {
-          const result = await processVideo(
-            item.file,
-            item.options,
-            null,
-            () => {
-              item.progress = Math.min(98, (item.progress || 0) + 1);
-
-              if (item.progress % CONFIG.progressRenderEvery === 0) {
-                renderQueue();
-              }
-            }
-          );
-
-          const base = safeFilename(baseName(item.file.name));
-          const outputName = getUniqueOutputName(
-            base,
-            $("suffix").value,
-            item.options.ct
-          );
-
-          const where = await saveOutput(result.blob, outputName);
-
-          item.output = {
-            blob: result.blob,
-            size: result.blob.size,
-            name: outputName,
-            where,
-          };
-
-          item.status = "completed";
-          item.progress = 100;
-
-          addStat(item.file.size, result.blob.size);
-        } catch (error) {
-          item.status = "failed";
-          item.error = error?.message || String(error);
-        }
-
-        renderQueue();
-      }
-
-      async function runQueue() {
-        if (state.running) return;
-
-        state.running = true;
-
-        const worker = async () => {
-          while (true) {
-            const item = state.queue.find(
-              (candidate) => candidate.status === "queued"
-            );
-
-            if (!item) return;
-
-            await processQueueItem(item);
-          }
-        };
-
-        try {
-          const workerCount = Math.min(
-            state.workers,
-            Math.max(1, state.queue.length)
-          );
-
-          await Promise.all(
-            Array.from({ length: workerCount }, () => worker())
-          );
-        } finally {
-          state.running = false;
-
-          if (state.queue.some((item) => item.status === "queued")) {
-            void runQueue();
-          }
-        }
-      }
-
-      function addFiles(fileList) {
-        const supported = [...fileList].filter(
-          (file) =>
-            file.type.startsWith("video/") ||
-            /\.(mp4|webm|mov|mkv|avi|m4v|ts|m2ts|mpeg|mpg|gif)$/i.test(
-              file.name
-            )
-        );
-
-        if (!supported.length) {
-          notify("No supported video files found.", "warn");
-          return;
-        }
-
-        const options = getSettings();
-
-        supported.forEach((file) => {
-          state.queue.push({
-            id: ++state.uid,
-            file,
-            options,
-            status: "queued",
-            progress: 0,
-            output: null,
-            error: "",
-          });
-        });
-
-        renderQueue();
-        void runQueue();
-      }
-
-      // ---------------------------------------------------------------------------
-      // Editor
-      // ---------------------------------------------------------------------------
-
-      function setMode(editorMode) {
-        $("converter").classList.toggle("hidden", editorMode);
-        $("editor").classList.toggle("hidden", !editorMode);
-
-        $("mConvert").className = `btn ${editorMode ? "secondary" : "on"}`;
-        $("mEdit").className = `btn ${editorMode ? "on" : "secondary"}`;
-      }
-
-      function updateTransformLabel() {
-        const rotation = state.transform.rot === 0 ? "0°" : `${state.transform.rot}°`;
-        const flips =
-          `${state.transform.fh ? "H" : ""}${state.transform.fv ? "V" : ""}`;
-
-        setText(
-          "transformState",
-          `Rotate ${rotation}${flips ? ` · Flip ${flips}` : " · Normal flip"}`
-        );
-      }
-
-      function previewTransform() {
-        const { rot, fh, fv } = state.transform;
-        const scaleX = fh ? -1 : 1;
-        const scaleY = fv ? -1 : 1;
-
-        $("video").style.transform = `rotate(${rot}deg) scale(${scaleX}, ${scaleY})`;
-        updateTransformLabel();
-      }
-
-      function resetTransform() {
-        state.transform = { rot: 0, fh: false, fv: false };
-        previewTransform();
-      }
-
-      function updateEditorTime() {
-        const video = $("video");
-        const duration = video.duration || 0;
-        const progress = duration ? (video.currentTime / duration) * 100 : 0;
-
-        setText("time", `${formatTime(video.currentTime)} / ${formatTime(duration)}`);
-        $("fill").style.width = `${Math.min(100, Math.max(0, progress))}%`;
-      }
-
-      function resetEditorControls() {
-        const video = $("video");
-        const width = video.videoWidth || 0;
-        const height = video.videoHeight || 0;
-
-        $("ts").value = "0";
-        $("te").value = durationOrZero(video).toFixed(2);
-        $("cropX").value = "0";
-        $("cropY").value = "0";
-        $("cropW").value = width;
-        $("cropH").value = height;
-        $("muteAudio").checked = false;
-        $("reverseAudio").checked = false;
-
-        setText("cropHint", width && height ? `Source: ${width} × ${height}` : "");
-        resetTransform();
-        updateEditorTime();
-      }
-
-      function durationOrZero(video) {
-        return Number.isFinite(video.duration) ? video.duration : 0;
-      }
-
-      function openEditorFile(file) {
-        state.editorFile = file;
-
-        $("edDrop").classList.add("hidden");
-        $("edCard").classList.remove("hidden");
-        setText("edName", file.name);
-
-        if (state.editorUrl) {
-          URL.revokeObjectURL(state.editorUrl);
-        }
-
-        state.editorUrl = URL.createObjectURL(file);
-
-        const video = $("video");
-        video.style.transform = "none";
-        video.src = state.editorUrl;
-
-        video.onloadedmetadata = () => {
-          resetEditorControls();
-          setText(
-            "edInfo",
-            `${video.videoWidth} × ${video.videoHeight} · ${formatSize(
-              file.size
-            )} · ${formatTime(video.duration)}`
-          );
-        };
-      }
-
-      function closeEditorFile() {
-        $("video").pause();
-
-        if (state.editorUrl) {
-          URL.revokeObjectURL(state.editorUrl);
-        }
-
-        state.editorUrl = null;
-        state.editorFile = null;
-
-        $("video").removeAttribute("src");
-        $("edCard").classList.add("hidden");
-        $("edDrop").classList.remove("hidden");
-
-        resetTransform();
-      }
-
-      function clampEditorCrop() {
-        const video = $("video");
-        const maxWidth = video.videoWidth || 0;
-        const maxHeight = video.videoHeight || 0;
-
-        let x = Math.max(0, readNumber("cropX"));
-        let y = Math.max(0, readNumber("cropY"));
-        let width = Math.max(1, readNumber("cropW", maxWidth));
-        let height = Math.max(1, readNumber("cropH", maxHeight));
-
-        if (x > maxWidth) x = maxWidth;
-        if (y > maxHeight) y = maxHeight;
-
-        if (x + width > maxWidth) {
-          width = Math.max(1, maxWidth - x);
-        }
-
-        if (y + height > maxHeight) {
-          height = Math.max(1, maxHeight - y);
-        }
-
-        $("cropX").value = x;
-        $("cropY").value = y;
-        $("cropW").value = width;
-        $("cropH").value = height;
-      }
-
-      function getEditorSettings() {
-        const options = getSettings();
-        const video = $("video");
-
-        options.rot = state.transform.rot;
-        options.fh = state.transform.fh;
-        options.fv = state.transform.fv;
-
-        const width = readNumber("cropW");
-        const height = readNumber("cropH");
-        const x = readNumber("cropX");
-        const y = readNumber("cropY");
-
-        const originalWidth = video.videoWidth || 0;
-        const originalHeight = video.videoHeight || 0;
-
-        options.crop =
-          width > 0 &&
-          height > 0 &&
-          (width < originalWidth ||
-            height < originalHeight ||
-            x > 0 ||
-            y > 0)
-            ? { x, y, w: width, h: height }
-            : null;
-
-        return options;
-      }
-
-      async function editorExport(
-        label,
-        trim = null,
-        extra = {},
-        suffix = "_edited"
-      ) {
-        if (!state.editorFile) return;
-
-        const options = getEditorSettings();
-        const progressBar = $("eprog");
-        const progressFill = $("ep");
-
-        progressBar.classList.remove("hidden");
-        progressFill.style.width = "3%";
-
-        try {
-          const result = await processVideo(
-            state.editorFile,
-            options,
-            trim,
-            (seconds) => {
-              if (trim && trim.e > trim.s) {
-                const percent =
-                  5 + (seconds / (trim.e - trim.s)) * 90;
-                progressFill.style.width = `${Math.min(96, percent)}%`;
-              } else {
-                const current = parseFloat(progressFill.style.width) || 3;
-                progressFill.style.width = `${Math.min(96, current + 1)}%`;
-              }
-            },
-            extra
-          );
-
-          const outputName =
-            safeFilename(baseName(state.editorFile.name)) +
-            suffix +
-            `.${options.ct}`;
-
-          await saveOutput(result.blob, outputName);
-
-          progressFill.style.width = "100%";
-          addStat(state.editorFile.size, result.blob.size);
-
-          notify(`${label}: ${outputName}`);
-          return result.blob;
-        } catch (error) {
-          notify(
-            `${label} failed: ${error?.message || String(error)}`,
-            "err"
-          );
-          throw error;
-        } finally {
-          setTimeout(() => progressBar.classList.add("hidden"), 700);
-        }
-      }
-
-      async function exportMutedVideo() {
-        if (!state.editorFile) return;
-
-        const video = $("video");
-        const start = Math.max(0, readNumber("ts"));
-        const end = Math.min(durationOrZero(video), readNumber("te"));
-        const trim = end > start ? { s: start, e: end } : null;
-
-        const options = getEditorSettings();
-        options.ac = "none";
-
-        try {
-          const result = await processVideo(
-            state.editorFile,
-            options,
-            trim,
-            null,
-            { mute: true }
-          );
-
-          const filename =
-            safeFilename(baseName(state.editorFile.name)) +
-            "_muted" +
-            `.${options.ct}`;
-
-          await saveOutput(result.blob, filename);
-          addStat(state.editorFile.size, result.blob.size);
-          notify(`Muted video exported: ${filename}`);
-        } catch (error) {
-          notify(
-            `Muted video export failed: ${error?.message || String(error)}`,
-            "err"
-          );
-        }
-      }
-
-      async function splitVideo() {
-        if (!state.editorFile) return;
-
-        const video = $("video");
-        const playhead = video.currentTime;
-        const duration = durationOrZero(video);
-
-        if (playhead <= 0.05 || playhead >= duration - 0.05) {
-          notify("Place the playhead inside the video to split it.", "warn");
-          return;
-        }
-
-        const options = getEditorSettings();
-        const base = safeFilename(baseName(state.editorFile.name));
-
-        try {
-          const [partOne, partTwo] = await Promise.all([
-            processVideo(
-              state.editorFile,
-              options,
-              { s: 0, e: playhead },
-              null
-            ),
-            processVideo(
-              state.editorFile,
-              options,
-              { s: playhead, e: duration },
-              null
-            ),
-          ]);
-
-          const nameOne = `${base}_part1.${options.ct}`;
-          const nameTwo = `${base}_part2.${options.ct}`;
-
-          await saveOutput(partOne.blob, nameOne);
-          await saveOutput(partTwo.blob, nameTwo);
-
-          // One source file is transformed into two outputs.
-          addStat(
-            state.editorFile.size,
-            partOne.blob.size + partTwo.blob.size,
-            1
-          );
-
-          notify(`Split complete: ${nameOne} and ${nameTwo}`);
-        } catch (error) {
-          notify(
-            `Split failed: ${error?.message || String(error)}`,
-            "err"
-          );
-        }
-      }
-
-      async function extractCurrentFrame() {
-        if (!state.editorFile) return;
-
-        try {
-          const seconds = $("video").currentTime;
-          const blob = await extractFrame(state.editorFile, seconds);
-          const filename =
-            safeFilename(baseName(state.editorFile.name)) +
-            `_frame_${Math.round(seconds * 1000)}.png`;
-
-          await saveOutput(blob, filename);
-          notify(`Frame extracted: ${filename}`);
-        } catch (error) {
-          notify(
-            `Frame extraction failed: ${error?.message || String(error)}`,
-            "err"
-          );
-        }
-      }
-
-      // ---------------------------------------------------------------------------
-      // Event wiring
-      // ---------------------------------------------------------------------------
-
-      $("workers").max = CPU_COUNT;
-
-      try {
-        state.workers = Math.max(
-          1,
-          Math.min(
-            CPU_COUNT,
-            Number(localStorage.getItem(CONFIG.workerKey)) || 2
-          )
-        );
-      } catch {
-        state.workers = Math.min(CPU_COUNT, 2);
-      }
-
-      $("workers").value = state.workers;
-      $("workers").oninput = updateWorkerUI;
-      updateWorkerUI();
-
-      [
-        "crf",
-        "vbit",
-        "abit",
-        "brightness",
-        "contrast",
-        "saturation",
-        "volume",
-      ].forEach((id) => {
-        $(id).oninput = updateRangeLabels;
-      });
-
-      $("preset").onchange = applyPreset;
-
-      $("pick").onclick = (event) => {
-        event.stopPropagation();
-        $("files").click();
-      };
-
-      $("folder").onclick = (event) => {
-        event.stopPropagation();
-        $("dirfiles").click();
-      };
-
-      $("drop").onclick = (event) => {
-        if (event.target.tagName !== "BUTTON") {
-          $("files").click();
-        }
-      };
-
-      $("files").onchange = (event) => {
-        addFiles(event.target.files);
-        event.target.value = "";
-      };
-
-      $("dirfiles").onchange = (event) => {
-        addFiles(event.target.files);
-        event.target.value = "";
-      };
-
-      ["dragover", "dragenter"].forEach((eventName) => {
-        $("drop").addEventListener(eventName, (event) => {
-          event.preventDefault();
-          $("drop").classList.add("dragover");
-        });
-      });
-
-      ["dragleave", "drop"].forEach((eventName) => {
-        $("drop").addEventListener(eventName, (event) => {
-          event.preventDefault();
-          $("drop").classList.remove("dragover");
-        });
-      });
-
-      $("drop").ondrop = (event) => {
-        addFiles(event.dataTransfer.files);
-      };
-
-      $("pickDir").onclick = pickDirectory;
-
-      $("clearDir").onclick = () => {
-        state.directory = null;
-        updateDirectoryUI();
-      };
-
-      $("clear").onclick = () => {
-        if (state.running) {
-          notify("Wait for processing to finish.", "warn");
-          return;
-        }
-
-        state.queue.length = 0;
-        renderQueue();
-      };
-
-      $("reset").onclick = () => {
-        state.session = { count: 0, saved: 0, original: 0 };
-        updateStatsUI();
-      };
-
-      $("zip").onclick = async () => {
-        const completed = state.queue.filter((item) => item.output);
-
-        if (!completed.length) {
-          notify("There are no completed files to package.", "warn");
-          return;
-        }
-
-        try {
-          await loadScript(CONFIG.jsZipScript);
-
-          const zip = new JSZip();
-
-          completed.forEach((item) => {
-            zip.file(item.output.name, item.output.blob);
-          });
-
-          const blob = await zip.generateAsync({
-            type: "blob",
-            compression: "STORE",
-          });
-
-          await saveOutput(blob, "aznur-video-batch.zip");
-          notify("ZIP created.");
-        } catch (error) {
-          notify(`ZIP failed: ${error?.message || String(error)}`, "err");
-        }
-      };
-
-      $("mConvert").onclick = () => setMode(false);
-      $("mEdit").onclick = () => setMode(true);
-
-      $("edPick").onclick = () => $("edInput").click();
-
-      $("edDrop").onclick = (event) => {
-        if (event.target.tagName !== "BUTTON") {
-          $("edInput").click();
-        }
-      };
-
-      $("edInput").onchange = (event) => {
-        const file = event.target.files?.[0];
-        if (file) openEditorFile(file);
-        event.target.value = "";
-      };
-
-      $("edDrop").addEventListener("dragover", (event) => {
-        event.preventDefault();
-        $("edDrop").classList.add("dragover");
-      });
-
-      $("edDrop").addEventListener("dragleave", () => {
-        $("edDrop").classList.remove("dragover");
-      });
-
-      $("edDrop").addEventListener("drop", (event) => {
-        event.preventDefault();
-        $("edDrop").classList.remove("dragover");
-
-        const file = event.dataTransfer.files?.[0];
-        if (file) openEditorFile(file);
-      });
-
-      $("video").ontimeupdate = updateEditorTime;
-
-      $("timeline").onclick = (event) => {
-        const video = $("video");
-        const duration = durationOrZero(video);
-        if (!duration) return;
-
-        const rect = $("timeline").getBoundingClientRect();
-        const ratio = Math.min(
-          1,
-          Math.max(0, (event.clientX - rect.left) / rect.width)
-        );
-
-        video.currentTime = ratio * duration;
-      };
-
-      $("start").onclick = () => {
-        $("ts").value = $("video").currentTime.toFixed(2);
-      };
-
-      $("end").onclick = () => {
-        $("te").value = $("video").currentTime.toFixed(2);
-      };
-
-      $("marks").onclick = () => {
-        $("ts").value = "0";
-        $("te").value = durationOrZero($("video")).toFixed(2);
-      };
-
-      $("rotL").onclick = () => {
-        state.transform.rot = (state.transform.rot + 270) % 360;
-        previewTransform();
-      };
-
-      $("rotR").onclick = () => {
-        state.transform.rot = (state.transform.rot + 90) % 360;
-        previewTransform();
-      };
-
-      $("flipH").onclick = () => {
-        state.transform.fh = !state.transform.fh;
-        previewTransform();
-      };
-
-      $("flipV").onclick = () => {
-        state.transform.fv = !state.transform.fv;
-        previewTransform();
-      };
-
-      $("resetTransform").onclick = resetTransform;
-
-      ["cropX", "cropY", "cropW", "cropH"].forEach((id) => {
-        $(id).oninput = clampEditorCrop;
-      });
-
-      $("resetCrop").onclick = () => {
-        const video = $("video");
-
-        $("cropX").value = "0";
-        $("cropY").value = "0";
-        $("cropW").value = video.videoWidth || 0;
-        $("cropH").value = video.videoHeight || 0;
-      };
-
-      $("edNew").onclick = closeEditorFile;
-
-      $("trim").onclick = async () => {
-        if (!state.editorFile) return;
-
-        const video = $("video");
-        const start = Math.max(0, readNumber("ts"));
-        const end = Math.min(durationOrZero(video), readNumber("te"));
-
-        if (end <= start) {
-          notify("End must be greater than start.", "warn");
-          return;
-        }
-
-        await editorExport(
-          "Trimmed video",
-          { s: start, e: end },
-          { mute: $("muteAudio").checked },
-          "_trimmed"
-        );
-      };
-
-      $("mute").onclick = exportMutedVideo;
-      $("split").onclick = splitVideo;
-      $("frame").onclick = extractCurrentFrame;
-
-      $("reverse").onclick = async () => {
-        if (!state.editorFile) return;
-
-        await editorExport(
-          "Reversed video",
-          null,
-          {
-            reverse: true,
-            mute: $("muteAudio").checked,
-            reverseAudio: $("reverseAudio").checked,
-          },
-          "_reversed"
-        );
-      };
-
-      // ---------------------------------------------------------------------------
-      // Initial state and lifecycle
-      // ---------------------------------------------------------------------------
-
-      updateStatsUI();
-      updateDirectoryUI();
-      updateRangeLabels();
-      resetTransform();
-      setMode(false);
-
-      window.addEventListener("beforeunload", (event) => {
-        if (!state.running) return;
-
-        event.preventDefault();
-        event.returnValue = "";
-      });
-    })();
+      },
+      extra
+    );
+
+    const outputName = safeFilename(baseName(state.editorFile.name)) + suffix + `.${options.ct}`;
+
+    await saveOutput(result.blob, outputName);
+    progressFill.style.width = "100%";
+    addStat(state.editorFile.size, result.blob.size);
+
+    notify(`${label}: ${outputName}`);
+    return result.blob;
+  } catch (error) {
+    notify(`${label} failed: ${error?.message || String(error)}`, "err");
+  } finally {
+    setTimeout(() => progressBar.classList.add("hidden"), 700);
+  }
+}
+
+async function exportMutedVideo() {
+  if (!state.editorFile) return;
+
+  const video = $("video");
+  const start = Math.max(0, readNumber("ts"));
+  const end = Math.min(durationOrZero(video), readNumber("te"));
+  const trim = end > start ? { s: start, e: end } : null;
+
+  const options = getEditorSettings();
+  options.ac = "none";
+
+  try {
+    const result = await processVideo(state.editorFile, options, trim, null, { mute: true });
+    const filename = safeFilename(baseName(state.editorFile.name)) + "_muted" + `.${options.ct}`;
+
+    await saveOutput(result.blob, filename);
+    addStat(state.editorFile.size, result.blob.size);
+    notify(`Muted video exported: ${filename}`);
+  } catch (error) {
+    notify(`Muted video export failed: ${error?.message || String(error)}`, "err");
+  }
+}
+
+async function splitVideo() {
+  if (!state.editorFile) return;
+
+  const video = $("video");
+  const playhead = video.currentTime;
+  const duration = durationOrZero(video);
+
+  if (playhead <= 0.05 || playhead >= duration - 0.05) {
+    notify("Place the playhead inside the video to split it.", "warn");
+    return;
+  }
+
+  const options = getEditorSettings();
+  const base = safeFilename(baseName(state.editorFile.name));
+
+  try {
+    const [partOne, partTwo] = await Promise.all([
+      processVideo(state.editorFile, options, { s: 0, e: playhead }, null),
+      processVideo(state.editorFile, options, { s: playhead, e: duration }, null),
+    ]);
+
+    const nameOne = `${base}_part1.${options.ct}`;
+    const nameTwo = `${base}_part2.${options.ct}`;
+
+    await saveOutput(partOne.blob, nameOne);
+    await saveOutput(partTwo.blob, nameTwo);
+
+    addStat(state.editorFile.size, partOne.blob.size + partTwo.blob.size, 1);
+    notify(`Split complete: ${nameOne} and ${nameTwo}`);
+  } catch (error) {
+    notify(`Split failed: ${error?.message || String(error)}`, "err");
+  }
+}
+
+async function extractCurrentFrame() {
+  if (!state.editorFile) return;
+
+  try {
+    const seconds = $("video").currentTime;
+    const blob = await extractFrame(state.editorFile, seconds);
+    const filename = safeFilename(baseName(state.editorFile.name)) + `_frame_${Math.round(seconds * 1000)}.png`;
+
+    await saveOutput(blob, filename);
+    notify(`Frame extracted: ${filename}`);
+  } catch (error) {
+    notify(`Frame extraction failed: ${error?.message || String(error)}`, "err");
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Event wiring
+// ---------------------------------------------------------------------------
+
+$("workers").max = CPU_COUNT;
+
+try {
+  state.workers = Math.max(1, Math.min(CPU_COUNT, Number(localStorage.getItem(CONFIG.workerKey)) || 2));
+} catch {
+  state.workers = Math.min(CPU_COUNT, 2);
+}
+
+$("workers").value = state.workers;
+$("workers").oninput = updateWorkerUI;
+updateWorkerUI();
+
+["crf", "vbit", "abit", "brightness", "contrast", "saturation", "volume"].forEach((id) => {
+  $(id).oninput = updateRangeLabels;
+});
+
+$("preset").onchange = applyPreset;
+$("container").onchange = syncContainerDefaults;
+
+$("pick").onclick = (event) => { event.stopPropagation(); $("files").click(); };
+$("folder").onclick = (event) => { event.stopPropagation(); $("dirfiles").click(); };
+$("drop").onclick = (event) => { if (event.target.tagName !== "BUTTON") $("files").click(); };
+
+$("files").onchange = (event) => { addFiles(event.target.files); event.target.value = ""; };
+$("dirfiles").onchange = (event) => { addFiles(event.target.files); event.target.value = ""; };
+
+["dragover", "dragenter"].forEach((eventName) => {
+  $("drop").addEventListener(eventName, (event) => {
+    event.preventDefault();
+    $("drop").classList.add("dragover");
+  });
+});
+
+["dragleave", "drop"].forEach((eventName) => {
+  $("drop").addEventListener(eventName, (event) => {
+    event.preventDefault();
+    $("drop").classList.remove("dragover");
+  });
+});
+
+$("drop").addEventListener("drop", (event) => { addFiles(event.dataTransfer.files); });
+
+$("pickDir").onclick = pickDirectory;
+$("clearDir").onclick = () => { state.directory = null; updateDirectoryUI(); };
+
+$("clear").onclick = () => {
+  if (state.running) { notify("Wait for processing to finish.", "warn"); return; }
+  state.queue.length = 0;
+  renderQueue();
+};
+
+$("reset").onclick = () => {
+  state.session = { count: 0, saved: 0, original: 0 };
+  updateStatsUI();
+};
+
+$("zip").onclick = async () => {
+  const completed = state.queue.filter((item) => item.output);
+
+  if (!completed.length) { notify("There are no completed files to package.", "warn"); return; }
+
+  try {
+    await loadScript(CONFIG.jsZipScript);
+    const zip = new JSZip();
+    completed.forEach((item) => zip.file(item.output.name, item.output.blob));
+    const blob = await zip.generateAsync({ type: "blob", compression: "STORE" });
+    await saveOutput(blob, "aznur-video-batch.zip");
+    notify("ZIP created.");
+  } catch (error) {
+    notify(`ZIP failed: ${error?.message || String(error)}`, "err");
+  }
+};
+
+$("mConvert").onclick = () => setMode(false);
+$("mEdit").onclick = () => setMode(true);
+
+$("edPick").onclick = (event) => { event.stopPropagation(); $("edInput").click(); };
+$("edDrop").onclick = (event) => { if (event.target.tagName !== "BUTTON") $("edInput").click(); };
+
+$("edInput").onchange = (event) => {
+  const file = event.target.files?.[0];
+  if (file) openEditorFile(file);
+  event.target.value = "";
+};
+
+$("edDrop").addEventListener("dragover", (event) => { event.preventDefault(); $("edDrop").classList.add("dragover"); });
+$("edDrop").addEventListener("dragleave", () => { $("edDrop").classList.remove("dragover"); });
+$("edDrop").addEventListener("drop", (event) => {
+  event.preventDefault();
+  $("edDrop").classList.remove("dragover");
+  const file = event.dataTransfer.files?.[0];
+  if (file) openEditorFile(file);
+});
+
+$("video").ontimeupdate = updateEditorTime;
+
+$("timeline").onclick = (event) => {
+  const video = $("video");
+  const duration = durationOrZero(video);
+  if (!duration) return;
+
+  const rect = $("timeline").getBoundingClientRect();
+  const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+  video.currentTime = ratio * duration;
+};
+
+$("start").onclick = () => { $("ts").value = $("video").currentTime.toFixed(2); };
+$("end").onclick = () => { $("te").value = $("video").currentTime.toFixed(2); };
+$("marks").onclick = () => { $("ts").value = "0"; $("te").value = durationOrZero($("video")).toFixed(2); };
+
+$("rotL").onclick = () => { state.transform.rot = (state.transform.rot + 270) % 360; previewTransform(); };
+$("rotR").onclick = () => { state.transform.rot = (state.transform.rot + 90) % 360; previewTransform(); };
+$("flipH").onclick = () => { state.transform.fh = !state.transform.fh; previewTransform(); };
+$("flipV").onclick = () => { state.transform.fv = !state.transform.fv; previewTransform(); };
+$("resetTransform").onclick = resetTransform;
+
+["cropX", "cropY", "cropW", "cropH"].forEach((id) => { $(id).oninput = clampEditorCrop; });
+
+$("resetCrop").onclick = () => {
+  const video = $("video");
+  $("cropX").value = "0";
+  $("cropY").value = "0";
+  $("cropW").value = video.videoWidth || 0;
+  $("cropH").value = video.videoHeight || 0;
+};
+
+$("edNew").onclick = closeEditorFile;
+
+$("trim").onclick = async () => {
+  if (!state.editorFile) return;
+
+  const video = $("video");
+  const start = Math.max(0, readNumber("ts"));
+  const end = Math.min(durationOrZero(video), readNumber("te"));
+
+  if (end <= start) { notify("End must be greater than start.", "warn"); return; }
+
+  await editorExport("Trimmed video", { s: start, e: end }, { mute: $("muteAudio").checked }, "_trimmed");
+};
+
+$("mute").onclick = exportMutedVideo;
+$("split").onclick = splitVideo;
+$("frame").onclick = extractCurrentFrame;
+
+$("reverse").onclick = async () => {
+  if (!state.editorFile) return;
+
+  await editorExport(
+    "Reversed video",
+    null,
+    { reverse: true, mute: $("muteAudio").checked, reverseAudio: $("reverseAudio").checked },
+    "_reversed"
+  );
+};
+
+// ---------------------------------------------------------------------------
+// Initial state and lifecycle
+// ---------------------------------------------------------------------------
+
+updateStatsUI();
+updateDirectoryUI();
+updateRangeLabels();
+resetTransform();
+setMode(false);
+
+window.addEventListener("beforeunload", (event) => {
+  if (!state.running) return;
+  event.preventDefault();
+  event.returnValue = "";
+});
+})();
 </script></body></html>
